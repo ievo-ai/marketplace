@@ -1,0 +1,51 @@
+##
+# iEvo Marketplace — Agent Registry
+# This file is the source of truth for `ievo add` and `ievo list --marketplace`
+##
+
+agents:
+  # ── Core SDD agents ──────────────────────────────────────
+  - name: spec-writer
+    version: 0.1.0
+    description: "Features → atomic, testable requirements"
+    model: sonnet
+    category: core
+    dependencies: []
+
+  - name: architect
+    version: 0.1.0
+    description: "REQs → implementation plans with TDD strategy"
+    model: opus
+    category: core
+    dependencies:
+      - spec-writer
+
+  - name: coder
+    version: 0.1.0
+    description: "Plans → TDD code following spec and architecture"
+    model: sonnet
+    category: core
+    dependencies:
+      - architect
+
+  # ── Planned (not yet available) ──────────────────────────
+  # - name: tester
+  #   version: 0.1.0
+  #   description: "Integration & acceptance testing"
+  #   model: sonnet
+  #   category: core
+  #   dependencies: [coder]
+
+  # - name: reviewer
+  #   version: 0.1.0
+  #   description: "Quality gate — spec compliance & code review"
+  #   model: opus
+  #   category: core
+  #   dependencies: [coder]
+
+  # - name: pm
+  #   version: 0.1.0
+  #   description: "Progress tracking & priority management"
+  #   model: haiku
+  #   category: core
+  #   dependencies: []
