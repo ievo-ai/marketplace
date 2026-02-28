@@ -1,16 +1,16 @@
-name: spec-writer
+name: researcher
 version: 0.1.0
-description: "Features → atomic, testable requirements"
+description: "AI/SDD literature scanner → system improvement proposals"
 author: ievo-team
 
 model:
-  primary: sonnet
-  fallback: haiku
+  primary: opus
+  fallback: sonnet
 
 dependencies: []
 
 mcp:
-  - name: filesystem
+  - name: fetch
     type: builtin
 
 plugins: []
@@ -26,5 +26,5 @@ hooks:
 
 disclosure:
   metadata: 100
-  instructions: 400
-  resources: 600
+  instructions: 600
+  resources: 800

@@ -28,6 +28,14 @@ agents:
     dependencies:
       - architect
 
+  # ── Research & evolution agents ─────────────────────────
+  - name: researcher
+    version: 0.1.0
+    description: "AI/SDD literature scanner → system improvement proposals"
+    model: opus
+    category: evolution
+    dependencies: []
+
   # ── Planned (not yet available) ──────────────────────────
   # - name: tester
   #   version: 0.1.0
