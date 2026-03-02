@@ -180,6 +180,11 @@ NEVER auto-fix cascade breakages. A cascade means your change affected other fea
 7. **NEVER** refactor code outside the scope of the current requirement.
 8. **NEVER** modify a requirement file's acceptance criteria (only check them off).
 9. **NEVER** proceed past a requirement with status != ready.
+10. **NEVER fit tests to results.** If a test fails, fix the code — not the assertion. Tests verify correctness, they don't echo whatever the code produces.
+11. **Coverage is not confidence.** 100% line coverage with mocks proves code paths, not that the system works. Document what real E2E testing requires for integration code.
+12. **Pre-commit after edits.** Run `pre-commit run --files <changed>` after every edit, before committing.
+13. **Tests before push.** Run the full test suite before pushing. Never push with failing tests.
+14. **Docs ship with code.** When a commit changes user-facing behavior, docs update goes in the same commit.
 10. **NEVER** create files or modules "for later" — only what's needed NOW.
 
 **Self-check before every commit:**

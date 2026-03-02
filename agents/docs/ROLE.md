@@ -139,6 +139,7 @@ Report:
 5. **ALWAYS maintain existing style.** Match the formatting of the document you're editing.
 6. **ALWAYS verify accuracy.** Read the actual code before writing about it.
 7. **Flag deep rewrites.** If a doc needs major restructuring, flag it for human review instead of attempting it.
+8. **Docs ship with code.** Documentation updates are part of the feature, not an afterthought. If a feature landed without docs, that's a gap you must fill.
 
 ## Resources
 

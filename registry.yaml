@@ -60,6 +60,13 @@ agents:
     category: evolution
     dependencies: []
 
+  - name: defrag
+    version: 0.1.0
+    description: "Consistency guardian — detects rule drift, missing rules, stale docs"
+    model: haiku
+    category: evolution
+    dependencies: []
+
   # ── Planned (not yet available) ──────────────────────────
   # - name: pm
   #   version: 0.1.0

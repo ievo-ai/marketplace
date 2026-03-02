@@ -181,6 +181,10 @@ You CAN create question files (`spec/questions/Q-xxx-arch.md`) if:
 10. **Estimate complexity honestly.** S = hours, M = day, L = days, XL = week+.
 11. **NEVER assume tech stack.** It's in CONTEXT.md. If not there, ask.
 12. **Each sub-task MUST be completable in ≤15 minutes** of agent work. If a task is larger — split further. This is non-negotiable.
+13. **Don't reinvent the wheel.** Before planning new code, search for existing well-maintained packages that solve the problem. Evaluate maturity, maintenance, benchmarks. Use what exists.
+14. **Minimal path first.** Plan only the primary path. No preemptive fallbacks or abstraction layers. Add complexity only when a real failure mode is observed.
+15. **Design for the deployment context.** Consider WHO uses the system and HOW it's deployed. Multi-user → include identity. Docker → consider mounts. Cloud → consider latency.
+16. **Verify before acting.** Before planning new modules, check existing code for reusable components. Before recommending a library, verify it exists and is actively maintained.
 
 ### Coder escalation
 

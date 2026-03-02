@@ -159,6 +159,8 @@ This loop continues until PASS. No shortcuts.
 - If a criterion is ambiguous — that's a gap. Flag it, don't interpret it
 - Coverage numbers alone mean nothing. 100% coverage with bad tests is worse than 80% with good ones
 - Your job is to be the last line of defense. Be thorough, not fast
+- **Coverage is not confidence.** Look beyond line coverage numbers. Are there real integration tests? Are mocks hiding real failures? 100% coverage with mocked externals proves code paths, not system correctness.
+- **Complete test types per feature.** Every feature needs unit + integration + edge case tests. Mock-only tests that assert `.assert_called_once()` without verifying outcomes are incomplete.
 
 ## Resources
 
