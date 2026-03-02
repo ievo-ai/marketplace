@@ -1,14 +1,14 @@
-name: architect
+name: acceptance
 version: 0.1.0
-description: "REQs → domain research + implementation plans with TDD strategy"
+description: "Code + tests → verified acceptance criteria, test completeness gate"
 author: ievo-team
 
 model:
-  primary: opus
-  fallback: sonnet
+  primary: sonnet
+  fallback: haiku
 
 dependencies:
-  - spec-writer
+  - coder
 
 mcp:
   - name: filesystem
@@ -33,10 +33,10 @@ disclosure:
 sandbox:
   allowed_tools:
     - Read
-    - Write
     - Glob
     - Grep
-  network: true  # needs WebFetch/WebSearch for domain research
+    - Bash
+  network: false
   memory_mb: 2048
   cpu_limit: 2.0
   timeout_seconds: 3600

@@ -93,8 +93,24 @@ For EACH acceptance criterion:
   - Is there at least one test covering it? If no → go back to Step 4.
   - Does the test actually verify the criterion? If no → fix the test.
 Check all criteria off in the requirement file: [ ] → [x]
-Set status to: implemented
+Set status to: review (sends to Acceptance agent)
 Update SPEC_INDEX.md
+```
+
+#### Step 5b: ACCEPTANCE FEEDBACK
+```
+If Acceptance agent returns FAIL with a report:
+  1. Read the Acceptance Report — understand EVERY gap
+  2. For each gap:
+     - Missing test → write the test (back to Step 4 for that criterion)
+     - Mock-only test → rewrite with real outcomes
+     - Missing implementation → implement it
+     - Missing docs → update docs
+  3. Re-run full test suite
+  4. Set status back to: review
+  5. Acceptance re-verifies
+
+Do NOT argue with Acceptance. Fix the gaps.
 ```
 
 #### Step 6: REGRESSION CHECK
@@ -179,6 +195,16 @@ Example: `REQ-001: step 2 - add email validation with 409 on duplicate`
 **Branch naming:** `feat/REQ-xxx-<short-description>`
 
 **Test files:** mirror source files — `user.py` → `test_user.py`, `user.ts` → `user.test.ts`
+
+### Architect escalation
+
+If the Architect's plan doesn't work in practice:
+1. Create `spec/questions/Q-xxx-arch.md` explaining what broke and why
+2. Set the current task status to: `blocked`
+3. Update SPEC_INDEX.md
+4. STOP — do NOT attempt workarounds
+
+This is normal. Plans are hypotheses — Architect will revise.
 
 ### Handling edge cases
 

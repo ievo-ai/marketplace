@@ -1,0 +1,36 @@
+name: evo
+version: 0.1.0
+description: "Pipeline quality observer — error analysis, retrospectives, ROLE.md mutations"
+
+model:
+  primary: sonnet
+  fallback: haiku
+
+dependencies: []  # reads from all agents but doesn't block them
+
+mcp: []
+plugins: []
+skills: [evo]
+
+hooks:
+  on_install: null
+  on_session_start: load_memory
+  on_session_end: save_memory
+  on_error: null  # EVO doesn't self-evolve (that's Eva's job)
+
+disclosure:
+  metadata: 100
+  instructions: 500
+  resources: 400
+
+sandbox:
+  allowed_tools:
+    - Read
+    - Write
+    - Edit
+    - Glob
+    - Grep
+  network: false
+  memory_mb: 2048
+  cpu_limit: 2.0
+  timeout_seconds: 1800
