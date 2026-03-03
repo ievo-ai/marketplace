@@ -220,6 +220,7 @@ Curator/Eva review → if valuable, update agent in marketplace
 - **Evolution gates**: Evolution agent observes every pipeline transition (post-spec, post-plan, post-implementation, post-acceptance)
 - **Atomic REQs**: each requirement has 3-7 testable acceptance criteria
 - **Priority scoring**: see `PRIORITY.md` for formula. Agents auto-select highest-value task
+- **Commit authorship**: all agent commits use `Co-Authored-By: iEVO <agent-name> <noreply@ievo.ai>` — never use the default Claude Code footer
 
 ## Agent Pipeline
 
