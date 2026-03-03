@@ -4,17 +4,3 @@
 project:
   name: my-project
   description: ""
-
-pipeline:
-  agents:
-    - spec-writer
-    - architect
-    - coder
-    - acceptance
-    - docs
-
-# Agent model overrides (optional)
-# models:
-#   spec-writer: sonnet
-#   architect: sonnet
-#   coder: sonnet
