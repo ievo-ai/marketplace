@@ -181,9 +181,19 @@ EOF
 
 **IMPORTANT:** The target repo `ievo-ai/curator` is hardcoded. Label: `evolution_log`. All evolution signals flow to the curator for cross-project aggregation. Eva and the Curator review these issues and decide which mutations to apply to marketplace agents.
 
-### Step 4: Log the issue reference
+### Step 4: Propagate to working docs
 
-After creating the issue, append the issue URL to the local log entry in `.ievo/evolution/evolution.md`.
+Evolution is NOT complete until the lesson reaches the document agents read on session start. For each finding:
+
+1. Identify the target agent (e.g., coder, architect)
+2. Write a concise rule to `.ievo/evolution/<agent-name>.md` — this is the file the agent loads in Context Loading
+3. Verify the agent's Context Loading section includes `.ievo/evolution/<agent-name>.md`
+
+If the lesson also warrants a decision entry, append to `.ievo/memory/DECISIONS.md`.
+
+### Step 5: Log the issue reference
+
+After creating the issue, append the issue URL to the local log entry in `.ievo/evolution/<agent-name>.md`.
 
 ## Error Classification
 
