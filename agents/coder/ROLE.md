@@ -19,9 +19,9 @@ On every invocation, follow these steps IN ORDER. Do not skip steps.
 
 #### Step 1: SCAN
 ```
-Read spec/SPEC_INDEX.md
+Read .ievo/spec/SPEC_INDEX.md
 
-FIRST — check spec/changes/ for CR files with status: ready
+FIRST — check .ievo/spec/changes/ for CR files with status: ready
   If any exist → process the CR instead of a new REQ (CRs always first)
   CRs are selected by: oldest first (lowest CR number)
 
@@ -37,7 +37,7 @@ If no ready requirements found → report "No actionable requirements" and STOP.
 
 #### Step 2: REVIEW
 ```
-Read the selected spec/requirements/REQ-xxx.md file.
+Read the selected .ievo/spec/requirements/REQ-xxx.md file.
 Analyze EVERY acceptance criterion.
 For EACH criterion, ask yourself:
   - Can I write an unambiguous test from this? Yes → continue. No → unclear.
@@ -45,7 +45,7 @@ For EACH criterion, ask yourself:
   - Does it reference something not defined? → unclear.
 
 IF anything is unclear:
-  1. Create spec/questions/Q-xxx.md with structured questions
+  1. Create .ievo/spec/questions/Q-xxx.md with structured questions
   2. Set requirement status to: blocked
   3. Update SPEC_INDEX.md
   4. STOP. Do NOT proceed to implementation.
@@ -55,7 +55,7 @@ IF everything is clear → proceed to Step 3.
 
 #### Step 3: PLAN
 ```
-CHECK if plans/PLAN-REQ-xxx.md already exists (created by Architect agent).
+CHECK if .ievo/plans/PLAN-REQ-xxx.md already exists (created by Architect agent).
 IF plan exists:
   - Read it carefully
   - Validate: does every micro-step trace back to an acceptance criterion?
@@ -63,7 +63,7 @@ IF plan exists:
   - If plan is valid → proceed to Step 4 using the Architect's plan
 
 IF no plan exists:
-  Create plans/PLAN-REQ-xxx.md containing:
+  Create .ievo/plans/PLAN-REQ-xxx.md containing:
   - Files to create or modify (with paths)
   - Micro-steps: break implementation into chunks of 1-3 tests each
   - Each micro-step must be independently committable
@@ -204,7 +204,7 @@ Example: `REQ-001: step 2 - add email validation with 409 on duplicate`
 ### Architect escalation
 
 If the Architect's plan doesn't work in practice:
-1. Create `spec/questions/Q-xxx-arch.md` explaining what broke and why
+1. Create `.ievo/spec/questions/Q-xxx-arch.md` explaining what broke and why
 2. Set the current task status to: `blocked`
 3. Update SPEC_INDEX.md
 4. STOP — do NOT attempt workarounds
@@ -253,16 +253,19 @@ When you complete an iteration, report:
 
 ## Resources
 
+### Pipeline conventions
+- `.ievo/IEVO.md` — directory structure, naming conventions, lifecycle
+
 ### Memory files
-- `memory/CONTEXT.md` — tech stack, coding conventions
-- `memory/DECISIONS.md` — architectural decisions to respect
-- `memory/VOCABULARY.md` — domain terms used in code
-- `memory/HISTORY.md` — session summaries
+- `.ievo/memory/CONTEXT.md` — tech stack, coding conventions
+- `.ievo/memory/DECISIONS.md` — architectural decisions to respect
+- `.ievo/memory/VOCABULARY.md` — domain terms used in code
+- `.ievo/memory/HISTORY.md` — session summaries
 
 ### Input
-- `plans/` — PLAN files from architect
-- `spec/requirements/` — REQ files for acceptance criteria
-- `spec/changes/` — CR files (always check first)
+- `.ievo/plans/` — PLAN files from architect
+- `.ievo/spec/requirements/` — REQ files for acceptance criteria
+- `.ievo/spec/changes/` — CR files (always check first)
 - `templates/CHANGE_REQUEST_TEMPLATE.md` — CR format reference
 
 ### Output

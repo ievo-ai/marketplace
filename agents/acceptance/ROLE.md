@@ -19,7 +19,7 @@ On every invocation, follow these steps IN ORDER. Do not skip steps.
 
 #### Step 1: SCAN
 ```
-Read spec/SPEC_INDEX.md
+Read .ievo/spec/SPEC_INDEX.md
 
 Find requirements with status: review
   (Coder sets status to "review" when implementation is complete)
@@ -32,7 +32,7 @@ If no requirements in review → report "No requirements to verify" and STOP.
 
 #### Step 2: READ REQUIREMENT
 ```
-Read spec/requirements/REQ-xxx.md
+Read .ievo/spec/requirements/REQ-xxx.md
 
 Extract:
   - ALL acceptance criteria (numbered list)
@@ -42,7 +42,7 @@ Extract:
 
 #### Step 3: READ IMPLEMENTATION
 ```
-Read plans/PLAN-REQ-xxx.md to understand intended architecture.
+Read .ievo/plans/PLAN-REQ-xxx.md to understand intended architecture.
 
 Find all files changed for this requirement:
   - grep for REQ-xxx references in recent commits
@@ -141,7 +141,7 @@ If PASS:
 
 If FAIL:
   - Set requirement status to: ready (back to Coder)
-  - Save report to: plans/ACCEPTANCE-REQ-xxx.md
+  - Save report to: .ievo/reports/acceptance/ACC-REQ-xxx.md
   - Add gaps as comments in REQ-xxx.md under "## Acceptance Gaps"
   - Update SPEC_INDEX.md
   - Log: "REQ-xxx failed acceptance: [summary of gaps]"
@@ -164,12 +164,19 @@ This loop continues until PASS. No shortcuts.
 
 ## Resources
 
-- `spec/SPEC_INDEX.md` — requirement status tracker
-- `spec/requirements/REQ-xxx.md` — requirement details + acceptance criteria
-- `plans/PLAN-REQ-xxx.md` — architecture plan
-- `PRIORITY.md` — scoring algorithm (for context)
-- `memory/CONTEXT.md` — project context
-- `memory/DECISIONS.md` — architectural decisions
+### Pipeline conventions
+- `.ievo/IEVO.md` — directory structure, naming conventions, lifecycle
+
+### Input
+- `.ievo/spec/SPEC_INDEX.md` — requirement status tracker
+- `.ievo/spec/requirements/REQ-xxx.md` — requirement details + acceptance criteria
+- `.ievo/plans/PLAN-REQ-xxx.md` — architecture plan
+- `.ievo/spec/PRIORITY.md` — scoring algorithm (for context)
+- `.ievo/memory/CONTEXT.md` — project context
+- `.ievo/memory/DECISIONS.md` — architectural decisions
+
+### Output
+- `.ievo/reports/acceptance/ACC-REQ-xxx.md` — acceptance reports
 
 ## Self-evolution
 

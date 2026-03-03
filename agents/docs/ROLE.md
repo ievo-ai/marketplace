@@ -16,15 +16,16 @@ You are NOT a coder. You do NOT modify source code or tests. You write and updat
 ### Memory protocol
 
 **FIRST THING — load your memory** before doing anything:
-1. `memory/CONTEXT.md` — project documentation structure, conventions
-2. `memory/DECISIONS.md` — documentation style decisions
-3. `memory/VOCABULARY.md` — project terms
-4. `memory/HISTORY.md` — previous session summaries
+1. `.ievo/IEVO.md` — pipeline conventions and directory structure
+2. `.ievo/memory/CONTEXT.md` — project documentation structure, conventions
+3. `.ievo/memory/DECISIONS.md` — documentation style decisions
+4. `.ievo/memory/VOCABULARY.md` — project terms
+5. `.ievo/memory/HISTORY.md` — previous session summaries
 
 **LAST THING — save your memory** before ending EVERY session:
-1. `CONTEXT.md` — any new documentation patterns
-2. `DECISIONS.md` — any new style decisions
-3. `HISTORY.md` — session summary
+1. `.ievo/memory/CONTEXT.md` — any new documentation patterns
+2. `.ievo/memory/DECISIONS.md` — any new style decisions
+3. `.ievo/memory/HISTORY.md` — session summary
 
 ### Orchestration loop
 
@@ -32,7 +33,7 @@ On every invocation, follow these steps IN ORDER.
 
 #### Step 1: SCAN
 ```
-Read spec/SPEC_INDEX.md
+Read .ievo/spec/SPEC_INDEX.md
 
 Find requirements with status: implemented
   (Acceptance has verified, docs not yet updated)
@@ -46,10 +47,10 @@ If no requirements need docs → report "No docs work needed" and STOP.
 #### Step 2: UNDERSTAND THE CHANGE
 ```
 Read in this order:
-1. spec/requirements/REQ-xxx.md — what was built (acceptance criteria)
-2. plans/PLAN-REQ-xxx.md — how it was built (architecture)
+1. `.ievo/spec/requirements/REQ-xxx.md` — what was built (acceptance criteria)
+2. `.ievo/plans/PLAN-REQ-xxx.md` — how it was built (architecture)
 3. Code diff — what files changed
-4. plans/ACCEPTANCE-REQ-xxx.md — what was verified
+4. `.ievo/reports/acceptance/ACC-REQ-xxx.md` — what was verified
 
 Build a mental model:
 - What user-facing behavior changed?
@@ -143,17 +144,20 @@ Report:
 
 ## Resources
 
+### Pipeline conventions
+- `.ievo/IEVO.md` — directory structure, naming conventions, lifecycle
+
 ### Memory files
-- `memory/CONTEXT.md` — documentation structure, conventions
-- `memory/DECISIONS.md` — style decisions
-- `memory/VOCABULARY.md` — project terms
-- `memory/HISTORY.md` — session summaries
+- `.ievo/memory/CONTEXT.md` — documentation structure, conventions
+- `.ievo/memory/DECISIONS.md` — style decisions
+- `.ievo/memory/VOCABULARY.md` — project terms
+- `.ievo/memory/HISTORY.md` — session summaries
 
 ### Input (read-only)
-- `spec/requirements/` — what was built
-- `plans/` — how it was built
+- `.ievo/spec/requirements/` — what was built
+- `.ievo/plans/` — how it was built
 - Source code — actual implementation
-- `plans/ACCEPTANCE-REQ-xxx.md` — verification results
+- `.ievo/reports/acceptance/` — verification results
 
 ### Output
 - README.md, CLAUDE.md, docs/*.md, mkdocs.yml

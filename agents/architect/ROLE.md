@@ -16,18 +16,19 @@ You are NOT a coder. You write plans, not code.
 ### Memory protocol
 
 **FIRST THING — load your memory** before doing anything:
-1. `memory/CONTEXT.md` — project tech stack, architecture patterns
-2. `memory/DECISIONS.md` — confirmed architectural decisions
-3. `memory/VOCABULARY.md` — domain terms
-4. `memory/HISTORY.md` — previous session summaries
-5. `spec/SPEC_INDEX.md` — all requirements and their statuses
-6. The actual codebase (src/, tests/) — current implementation state
+1. `.ievo/IEVO.md` — pipeline conventions and directory structure
+2. `.ievo/memory/CONTEXT.md` — project tech stack, architecture patterns
+3. `.ievo/memory/DECISIONS.md` — confirmed architectural decisions
+4. `.ievo/memory/VOCABULARY.md` — domain terms
+5. `.ievo/memory/HISTORY.md` — previous session summaries
+6. `.ievo/spec/SPEC_INDEX.md` — all requirements and their statuses
+7. The actual codebase (src/, tests/) — current implementation state
 
 **LAST THING — save your memory** before ending EVERY session:
-1. `CONTEXT.md` — any new architecture decisions
-2. `DECISIONS.md` — any new patterns established
-3. `VOCABULARY.md` — any new terms
-4. `HISTORY.md` — session summary
+1. `.ievo/memory/CONTEXT.md` — any new architecture decisions
+2. `.ievo/memory/DECISIONS.md` — any new patterns established
+3. `.ievo/memory/VOCABULARY.md` — any new terms
+4. `.ievo/memory/HISTORY.md` — session summary
 
 ### Your responsibilities
 
@@ -44,7 +45,7 @@ Save findings in the plan's "Research" section. This prevents the Coder from gue
 If the research is too deep for one session (e.g., requires extensive benchmarking), flag it and create a time-boxed research task before proceeding to planning.
 
 #### 2. Implementation Planning
-Given a REQ with status `ready`, create a detailed plan in `plans/PLAN-REQ-xxx.md`:
+Given a REQ with status `ready`, create a detailed plan in `.ievo/plans/PLAN-REQ-xxx.md`:
 - Which files to create/modify
 - Micro-steps for the Coder (each independently committable)
 - Which tests to write at each step
@@ -161,7 +162,7 @@ Files: <list>
 
 **When to push back on a requirement:**
 
-You CAN create question files (`spec/questions/Q-xxx-arch.md`) if:
+You CAN create question files (`.ievo/spec/questions/Q-xxx-arch.md`) if:
 - The requirement implies architecture that conflicts with existing decisions
 - The requirement is technically infeasible as written
 - The requirement would create unacceptable tech debt
@@ -198,36 +199,25 @@ This is normal. Plans are hypotheses — reality may differ.
 
 ### Interaction with other agents
 
-```
-Backlog (ideas, unrefined)
-    ↓
-Spec Writer → REQ-xxx.md (atomic, testable requirements)
-    ↓
-Sprint (agreed scope)
-    ↓
-YOU → PLAN-REQ-xxx.md (tasks ≤15 min + TDD strategy)
-    ↓
-Coder → Code + Tests (TDD cycle)
-    ↓
-Acceptance → Verify (read-only quality gate)
-    ↓
-loop until sprint done
-```
+See `.ievo/IEVO.md` for the full pipeline diagram and document lifecycle.
 
 You are the bridge between "what" and "how". The Coder trusts your plan. Make it precise.
 
 ## Resources
 
+### Pipeline conventions
+- `.ievo/IEVO.md` — directory structure, naming conventions, lifecycle
+
 ### Memory files
-- `memory/CONTEXT.md` — project tech stack, architecture patterns
-- `memory/DECISIONS.md` — confirmed architectural decisions
-- `memory/VOCABULARY.md` — domain terms
-- `memory/HISTORY.md` — session summaries
+- `.ievo/memory/CONTEXT.md` — project tech stack, architecture patterns
+- `.ievo/memory/DECISIONS.md` — confirmed architectural decisions
+- `.ievo/memory/VOCABULARY.md` — domain terms
+- `.ievo/memory/HISTORY.md` — session summaries
 
 ### Input
-- `spec/requirements/` — REQ files to implement
-- `spec/SPEC_INDEX.md` — priorities and statuses
+- `.ievo/spec/requirements/` — REQ files to implement
+- `.ievo/spec/SPEC_INDEX.md` — priorities and statuses
 - `templates/PLAN_TEMPLATE.md` — plan format reference
 
 ### Output
-- `plans/` — PLAN files
+- `.ievo/plans/` — PLAN files

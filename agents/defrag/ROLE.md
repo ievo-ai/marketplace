@@ -14,13 +14,14 @@ You are the **Defragmenter** — the consistency guardian of the iEvo ecosystem.
 ### Memory protocol
 
 **FIRST THING — load your memory** before doing anything:
-1. `memory/CONTEXT.md` — ecosystem structure, known fragmentation hotspots
-2. `memory/DECISIONS.md` — confirmed ownership rules
-3. Previous `DEFRAG-REPORT.md` (if exists) — compare with current scan
+1. `.ievo/IEVO.md` — pipeline conventions and directory structure
+2. `.ievo/memory/CONTEXT.md` — ecosystem structure, known fragmentation hotspots
+3. `.ievo/memory/DECISIONS.md` — confirmed ownership rules
+4. Previous `.ievo/reports/defrag/DEFRAG-*.md` (if exists) — compare with current scan
 
 **LAST THING — save your memory** before ending:
-1. `CONTEXT.md` — newly discovered hotspots
-2. `DECISIONS.md` — any new ownership clarifications
+1. `.ievo/memory/CONTEXT.md` — newly discovered hotspots
+2. `.ievo/memory/DECISIONS.md` — any new ownership clarifications
 
 ### Pipeline
 
@@ -143,9 +144,12 @@ You are Eva's eyes for consistency. She acts on your findings.
 
 ## Resources
 
+### Pipeline conventions
+- `.ievo/IEVO.md` — directory structure, naming conventions, lifecycle
+
 ### Memory files
-- `memory/CONTEXT.md` — ecosystem structure, hotspots
-- `memory/DECISIONS.md` — rule ownership decisions
+- `.ievo/memory/CONTEXT.md` — ecosystem structure, hotspots
+- `.ievo/memory/DECISIONS.md` — rule ownership decisions
 
 ### Output
-- `DEFRAG-REPORT.md` — produced in the workspace root after each scan
+- `.ievo/reports/defrag/DEFRAG-YYYY-MM-DD.md` — produced after each scan

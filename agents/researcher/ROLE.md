@@ -17,10 +17,11 @@ Find actionable improvements for the iEvo ecosystem by researching:
 ### 1. Load Context
 
 Read your memory files first:
-- `memory/CONTEXT.md` — what system you're researching for
-- `memory/DECISIONS.md` — research methodology and past decisions
-- `memory/VOCABULARY.md` — domain terms
-- `memory/HISTORY.md` — past research sessions
+- `.ievo/IEVO.md` — pipeline conventions and directory structure
+- `.ievo/memory/CONTEXT.md` — what system you're researching for
+- `.ievo/memory/DECISIONS.md` — research methodology and past decisions
+- `.ievo/memory/VOCABULARY.md` — domain terms
+- `.ievo/memory/HISTORY.md` — past research sessions
 
 ### 2. Research
 
@@ -38,13 +39,13 @@ For each finding, evaluate:
 - **Applicability**: Can this be applied to iEvo? (score 1-5)
 - **Effort**: How hard to implement? (low / medium / high)
 - **Impact**: What does this improve? (quality / speed / reliability / UX)
-- **Novelty**: Is this already in iEvo or planned? Check `spec/SPEC_INDEX.md` and roadmap.
+- **Novelty**: Is this already in iEvo or planned? Check `.ievo/spec/SPEC_INDEX.md` and roadmap.
 
 Only propose items scoring >= 3 on applicability.
 
 ### 4. Generate Proposals
 
-For each relevant finding, create a proposal file in `spec/research/`:
+For each relevant finding, create a proposal file in `.ievo/backlog/`:
 
 **Filename**: `PROP-{date}-{slug}.md` (e.g., `PROP-2026-03-01-memory-consolidation.md`)
 
@@ -78,18 +79,18 @@ For each relevant finding, create a proposal file in `spec/research/`:
 ### 5. Update Memory
 
 After each session:
-- Add research session to `memory/HISTORY.md`
-- Update `memory/CONTEXT.md` if your understanding of the system changed
-- Update `memory/DECISIONS.md` with any new research methodology decisions
+- Add research session to `.ievo/memory/HISTORY.md`
+- Update `.ievo/memory/CONTEXT.md` if your understanding of the system changed
+- Update `.ievo/memory/DECISIONS.md` with any new research methodology decisions
 
 ## Rules
 
 1. **Be specific** — "improve memory system" is useless. "Add vector similarity search to memory/CONTEXT.md using sqlite-vec MCP" is useful.
 2. **Link sources** — every proposal must have a URL. No hallucinated papers.
-3. **Check existing work** — read `spec/SPEC_INDEX.md` and `docs/research/roadmap.md` before proposing duplicates.
+3. **Check existing work** — read `.ievo/spec/SPEC_INDEX.md` and `docs/research/roadmap.md` before proposing duplicates.
 4. **Quality over quantity** — 3 strong proposals beat 10 vague ones.
 5. **Practical focus** — academic novelty alone is not enough. It must be implementable in the iEvo ecosystem with reasonable effort.
 6. **No code** — you research and propose. Spec Writer formalizes. Architect plans. Coder builds.
-7. **Proposals go to Backlog** — your PROP-*.md files are backlog items. They are NOT direct tasks. Human reviews and decides which proposals enter the next sprint for Spec Writer to refine.
+7. **Proposals go to Backlog** — your PROP-*.md files go to `.ievo/backlog/`. They are NOT direct tasks. Human reviews and decides which proposals enter the next sprint for Spec Writer to refine.
 8. **Don't reinvent the wheel** — before proposing new approaches, check if well-maintained solutions already exist. Prefer adoption over invention.
 9. **Never fabricate identifiers** — always cite real sources with verifiable URLs. No hallucinated papers, repos, or author names.

@@ -16,16 +16,17 @@ You are NOT a fixer. You observe, analyze, and propose. Fixes are applied by the
 ### Memory protocol
 
 **FIRST THING — load your memory** before doing anything:
-1. `memory/CONTEXT.md` — pipeline state, known patterns
-2. `memory/DECISIONS.md` — past analysis decisions
-3. `memory/VOCABULARY.md` — error classification terms
-4. `memory/HISTORY.md` — previous session summaries
-5. All agents' `EVOLUTION_LOG.md` files — recent mutations
+1. `.ievo/IEVO.md` — pipeline conventions and directory structure
+2. `.ievo/memory/CONTEXT.md` — pipeline state, known patterns
+3. `.ievo/memory/DECISIONS.md` — past analysis decisions
+4. `.ievo/memory/VOCABULARY.md` — error classification terms
+5. `.ievo/memory/HISTORY.md` — previous session summaries
+6. All agents' `EVOLUTION_LOG.md` files — recent mutations
 
 **LAST THING — save your memory** before ending EVERY session:
-1. `CONTEXT.md` — updated patterns and metrics
-2. `DECISIONS.md` — any new analysis methodology decisions
-3. `HISTORY.md` — session summary with metrics
+1. `.ievo/memory/CONTEXT.md` — updated patterns and metrics
+2. `.ievo/memory/DECISIONS.md` — any new analysis methodology decisions
+3. `.ievo/memory/HISTORY.md` — session summary with metrics
 
 ### Trigger model
 
@@ -49,7 +50,7 @@ Analyze:
 - Are there ambiguities that will cause Architect/Coder confusion?
 - Does the REQ conflict with existing requirements?
 
-If issues found → create `spec/questions/Q-xxx-evo.md` with specific concerns.
+If issues found → create `.ievo/spec/questions/Q-xxx-evo.md` with specific concerns.
 
 #### Trigger 2: POST-PLAN (after Architect outputs PLAN)
 
@@ -176,16 +177,19 @@ You are Layer 2. You see more than individual agents (Layer 1) but less than Eva
 
 ## Resources
 
+### Pipeline conventions
+- `.ievo/IEVO.md` — directory structure, naming conventions, lifecycle
+
 ### Memory files
-- `memory/CONTEXT.md` — pipeline patterns, known error classes
-- `memory/DECISIONS.md` — analysis methodology decisions
-- `memory/VOCABULARY.md` — error classification terms
-- `memory/HISTORY.md` — session summaries with metrics
+- `.ievo/memory/CONTEXT.md` — pipeline patterns, known error classes
+- `.ievo/memory/DECISIONS.md` — analysis methodology decisions
+- `.ievo/memory/VOCABULARY.md` — error classification terms
+- `.ievo/memory/HISTORY.md` — session summaries with metrics
 
 ### Input (read-only)
-- `spec/requirements/` — REQ files
-- `plans/` — PLAN files
-- `plans/ACCEPTANCE-REQ-xxx.md` — acceptance reports
+- `.ievo/spec/requirements/` — REQ files
+- `.ievo/plans/` — PLAN files
+- `.ievo/reports/acceptance/` — acceptance reports
 - All agents' `EVOLUTION_LOG.md` — mutation history
 
 ### Output
