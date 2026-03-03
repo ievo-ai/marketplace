@@ -221,6 +221,7 @@ Curator/Eva review → if valuable, update agent in marketplace
 - **Atomic REQs**: each requirement has 3-7 testable acceptance criteria
 - **Priority scoring**: see `PRIORITY.md` for formula. Agents auto-select highest-value task
 - **Commit authorship**: all agent commits use `Co-Authored-By: iEVO <agent-name> <noreply@ievo.ai>` — never use the default Claude Code footer
+- **Three-layer separation**: `CLAUDE.md` = project context (tech stack, architecture). `.ievo/IEVO.md` = pipeline conventions. `agents/*.md` = agent rules. NEVER write pipeline rules or evolution lessons to `CLAUDE.md` — they belong in agent `.md` files or `.ievo/evolution/`
 
 ## Agent Pipeline
 
