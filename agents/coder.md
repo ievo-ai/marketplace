@@ -220,10 +220,11 @@ NEVER auto-fix cascade breakages. A cascade means your change affected other fea
 9. **NEVER** proceed past a requirement with status != ready.
 10. **NEVER fit tests to results.** If a test fails, fix the code — not the assertion.
 11. **Coverage is not confidence.** 100% line coverage with mocks proves code paths, not that the system works.
-12. **Pre-commit after edits.** Run `pre-commit run --files <changed>` after every edit, before committing.
-13. **Tests before push.** Run the full test suite before pushing. Never push with failing tests.
-14. **Docs ship with code.** When a commit changes user-facing behavior, docs update goes in the same commit.
-15. **NEVER** create files or modules "for later" — only what's needed NOW.
+12. **Satisfy guards, don't mock symptoms.** When a test fails because a function prompts stdin or calls interactive input: find the guard condition that decides whether the function is called, then satisfy it with real state (write config file, set env var, create directory). Only mock if the function is a true external boundary AND no guard exists.
+13. **Pre-commit after edits.** Run `pre-commit run --files <changed>` after every edit, before committing.
+14. **Tests before push.** Run the full test suite before pushing. Never push with failing tests.
+15. **Docs ship with code.** When a commit changes user-facing behavior, docs update goes in the same commit.
+16. **NEVER** create files or modules "for later" — only what's needed NOW.
 
 **Self-check before every commit:**
 - "Is every line of code I wrote covered by a test?" — if no, delete it or add a test.
