@@ -227,4 +227,24 @@ Curator/Eva review → if valuable, update agent in marketplace
 Backlog → Spec Writer → [Evolution] → Sprint → Architect → [Evolution] → Coder → [Evolution] → Acceptance → [Evolution] → Docs → Done
 ```
 
-Agents read this file for directory structure and conventions. Agent-specific instructions are in each agent's `.md` file.
+### Agent Discovery
+
+Your project has pipeline agents installed in `.claude/agents/`. To see available agents:
+
+```bash
+ls .claude/agents/*.md
+```
+
+Read each agent's `.md` file to understand its role, tools, and when to delegate to it. **Always delegate pipeline tasks to the appropriate agent** instead of doing everything yourself:
+
+| Task | Agent |
+|------|-------|
+| Break down features into requirements | `spec-writer` |
+| Create implementation plans | `architect` |
+| Write code and tests | `coder` |
+| Verify acceptance criteria | `acceptance` |
+| Update documentation | `docs` |
+| Log lessons from mistakes | `evolution` |
+| Research external tools/APIs | `researcher` |
+
+Agent-specific instructions are in each agent's `.md` file.
