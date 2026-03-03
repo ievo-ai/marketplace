@@ -132,7 +132,19 @@ Append to `.ievo/evolution/evolution.md`:
 **Proposed mutation:** <agent> — <rule change summary>
 ```
 
-### Step 2: Create GitHub issue in curator
+### Step 2: Sanitize before publishing
+
+Issues are **public**. Before creating the issue, strip ALL sensitive data:
+
+- **File paths**: replace absolute paths with relative (e.g., `/Users/denis/projects/foo/src/auth.py` → `src/auth.py`)
+- **Tokens/secrets**: NEVER include API keys, tokens, passwords, env var values. Reference by name only (e.g., "the `DATABASE_URL` was misconfigured")
+- **Internal URLs**: replace with generic descriptions (e.g., "internal API endpoint")
+- **User data**: no PII, no real usernames, no email addresses
+- **Code snippets**: OK to include, but strip hardcoded credentials or connection strings
+
+**Rule of thumb**: if the issue body could be published as a blog post without embarrassment — it's clean.
+
+### Step 3: Create GitHub issue in curator
 
 ```bash
 gh issue create --repo ievo-ai/curator \
@@ -163,7 +175,7 @@ EOF
 
 **IMPORTANT:** The target repo `ievo-ai/curator` is hardcoded. Label: `evolution_log`. All evolution signals flow to the curator for cross-project aggregation. Eva and the Curator review these issues and decide which mutations to apply to marketplace agents.
 
-### Step 3: Log the issue reference
+### Step 4: Log the issue reference
 
 After creating the issue, append the issue URL to the local log entry in `.ievo/evolution/evolution.md`.
 
