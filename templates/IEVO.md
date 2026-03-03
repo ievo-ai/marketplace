@@ -158,6 +158,38 @@ Decisions persist across sessions. When an agent needs to know WHY something was
 | Any doc → Decisions | **Strong** | "Per D-007, we use PostgreSQL" |
 | HISTORY.md → Sessions | **Strong** | Links to `sessions/NNN/` directories |
 
+## Evolution Overlay
+
+Each agent accumulates project-specific lessons in `.ievo/evolution/<agent>.md`. These files are **local to the project** — they survive agent updates from the marketplace.
+
+### How it works
+
+```
+Agent makes a mistake → /evo skill → logs lesson to .ievo/evolution/<agent>.md
+Evolution agent picks it up → creates issue in ievo-ai/curator (evolution_log label)
+Curator/Eva review → if valuable, update agent in marketplace
+```
+
+### File format
+
+```markdown
+# Evolution: <agent-name>
+
+## YYYY-MM-DD: <brief title>
+
+**Type:** <spec-error|plan-error|code-error|test-error|process-error>
+**What happened:** <1-2 sentences>
+**Root cause:** <why it happened>
+**Lesson:** <actionable rule to prevent recurrence>
+```
+
+### Rules
+
+- **Overlay, not override.** Evolution files ADD rules — they never contradict the agent's base instructions.
+- **Project-specific only.** Generic lessons go to the curator (via Evolution agent issues). Only rules that apply specifically to THIS project belong here.
+- **Append-only.** Never delete entries — they are the learning history.
+- **Survives updates.** When HR agent updates an agent from marketplace, evolution overlays are preserved.
+
 ## Naming Conventions
 
 | Type | Pattern | Location |
@@ -176,6 +208,7 @@ Decisions persist across sessions. When an agent needs to know WHY something was
 | Session log | `log.md` | `.ievo/memory/sessions/NNN/` |
 | Session index | `HISTORY.md` | `.ievo/memory/` |
 | Decision | `D-NNN` (entry in file) | `.ievo/memory/DECISIONS.md` |
+| Evolution overlay | `<agent>.md` | `.ievo/evolution/` |
 
 ## Pipeline Rules
 
