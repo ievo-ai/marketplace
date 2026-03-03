@@ -1,76 +1,106 @@
 ##
 # iEvo Marketplace — Agent Registry
 # This file is the source of truth for `ievo add` and `ievo list --marketplace`
+#
+# Format: native Claude Code sub-agents (.md files with YAML frontmatter)
+# Location: agents/<name>.md
+# Templates: templates/*.md (shared across all agents)
 ##
 
 agents:
-  # ── Core SDD agents ──────────────────────────────────────
+  # ── Core SDD pipeline ──────────────────────────────────────
   - name: spec-writer
-    version: 0.1.0
-    description: "Features → atomic, testable requirements"
+    version: 0.2.0
+    file: agents/spec-writer.md
+    description: "Features → atomic, testable requirements (REQ-xxx)"
     model: sonnet
     category: core
+    mandatory: true
     dependencies: []
 
   - name: architect
-    version: 0.1.0
+    version: 0.2.0
+    file: agents/architect.md
     description: "REQs → domain research + implementation plans with TDD strategy"
     model: opus
     category: core
+    mandatory: true
     dependencies:
       - spec-writer
 
   - name: coder
-    version: 0.1.0
+    version: 0.2.0
+    file: agents/coder.md
     description: "Plans → TDD code following spec and architecture"
     model: sonnet
     category: core
+    mandatory: true
     dependencies:
       - architect
 
-  # ── Research & evolution agents ─────────────────────────
-  - name: researcher
-    version: 0.1.0
-    description: "AI/SDD literature scanner → system improvement proposals"
-    model: opus
-    category: evolution
-    dependencies: []
-
   - name: acceptance
-    version: 0.1.0
+    version: 0.2.0
+    file: agents/acceptance.md
     description: "Code + tests → verified acceptance criteria, final quality gate"
     model: sonnet
     category: core
+    mandatory: true
     dependencies:
       - coder
 
   - name: docs
-    version: 0.1.0
+    version: 0.2.0
+    file: agents/docs.md
     description: "Code changes → updated documentation (README, CLAUDE.md, docs/, MkDocs)"
     model: haiku
     category: core
+    mandatory: true
     dependencies:
       - acceptance
 
-  # ── Research & evolution agents ────────────────────────────
+  # ── Evolution & quality agents ─────────────────────────────
   - name: evo
-    version: 0.1.0
-    description: "Pipeline quality observer — error analysis at every transition, ROLE.md mutations"
+    version: 0.2.0
+    file: agents/evo.md
+    description: "Pipeline quality observer — error analysis at every transition, mutation proposals"
     model: sonnet
     category: evolution
+    mandatory: true
+    dependencies: []
+
+  - name: researcher
+    version: 0.2.0
+    file: agents/researcher.md
+    description: "AI/SDD literature scanner → system improvement proposals"
+    model: opus
+    category: evolution
+    mandatory: true
     dependencies: []
 
   - name: defrag
-    version: 0.1.0
+    version: 0.2.0
+    file: agents/defrag.md
     description: "Consistency guardian — detects rule drift, missing rules, stale docs"
     model: haiku
     category: evolution
+    mandatory: true
     dependencies: []
 
-  # ── Planned (not yet available) ──────────────────────────
-  # - name: pm
-  #   version: 0.1.0
-  #   description: "Progress tracking & priority management"
-  #   model: haiku
-  #   category: core
-  #   dependencies: []
+  # ── Team management ────────────────────────────────────────
+  - name: hr
+    version: 0.2.0
+    file: agents/hr.md
+    description: "Agent team manager — deploy, update, remove agents in .claude/agents/"
+    model: sonnet
+    category: management
+    mandatory: true
+    dependencies: []
+
+# Shared templates (deployed to .ievo/templates/ by CLI)
+templates:
+  - REQ_TEMPLATE.md
+  - QUESTION_TEMPLATE.md
+  - PLAN_TEMPLATE.md
+  - CHANGE_REQUEST_TEMPLATE.md
+  - ACCEPTANCE_REPORT_TEMPLATE.md
+  - PROPOSAL_TEMPLATE.md
