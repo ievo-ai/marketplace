@@ -14,7 +14,6 @@ tools:
 memory: user
 skills:
   - evo
-maxTurns: 50
 ---
 
 # Spec Writer

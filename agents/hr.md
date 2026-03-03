@@ -14,7 +14,6 @@ tools:
   - Bash
   - WebFetch
 memory: user
-maxTurns: 30
 ---
 
 # HR

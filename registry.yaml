@@ -98,6 +98,7 @@ agents:
 
 # Shared templates (deployed to .ievo/templates/ by CLI)
 templates:
+  - IEVO.md
   - REQ_TEMPLATE.md
   - QUESTION_TEMPLATE.md
   - PLAN_TEMPLATE.md

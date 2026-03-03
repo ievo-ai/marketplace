@@ -11,7 +11,6 @@ tools:
   - Grep
 permissionMode: plan
 memory: user
-maxTurns: 20
 ---
 
 # Defragmenter

@@ -12,7 +12,6 @@ tools:
   - Glob
   - Grep
 memory: user
-maxTurns: 30
 ---
 
 # EVO

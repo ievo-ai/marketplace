@@ -16,7 +16,6 @@ tools:
 memory: user
 skills:
   - evo
-maxTurns: 40
 ---
 
 # Researcher

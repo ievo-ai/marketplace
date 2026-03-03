@@ -14,7 +14,6 @@ permissionMode: acceptEdits
 memory: user
 skills:
   - evo
-maxTurns: 30
 ---
 
 # Docs

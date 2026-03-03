@@ -17,7 +17,6 @@ tools:
 memory: user
 skills:
   - evo
-maxTurns: 60
 ---
 
 # Architect

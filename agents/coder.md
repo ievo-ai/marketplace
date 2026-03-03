@@ -16,7 +16,6 @@ permissionMode: acceptEdits
 memory: user
 skills:
   - evo
-maxTurns: 80
 ---
 
 # Coder
