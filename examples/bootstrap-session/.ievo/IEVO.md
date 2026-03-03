@@ -184,14 +184,14 @@ Decisions persist across sessions. When an agent needs to know WHY something was
 - **Backlog = pre-spec**: raw ideas and proposals, not yet refined into requirements
 - **Acceptance loop**: FAIL → Coder fixes → Acceptance re-verifies. No shortcuts
 - **Coder escalation**: plan broken → `Q-xxx-arch.md` → Architect revises plan
-- **EVO gates**: EVO agent observes every pipeline transition (post-spec, post-plan, post-implementation, post-acceptance)
+- **Evolution gates**: Evolution agent observes every pipeline transition (post-spec, post-plan, post-implementation, post-acceptance)
 - **Atomic REQs**: each requirement has 3-7 testable acceptance criteria
 - **Priority scoring**: see `PRIORITY.md` for formula. Agents auto-select highest-value task
 
 ## Agent Pipeline
 
 ```
-Backlog → Spec Writer → [EVO] → Sprint → Architect → [EVO] → Coder → [EVO] → Acceptance → [EVO] → Docs → Done
+Backlog → Spec Writer → [Evolution] → Sprint → Architect → [Evolution] → Coder → [Evolution] → Acceptance → [Evolution] → Docs → Done
 ```
 
 Agents read this file for directory structure and conventions. Agent-specific instructions are in each agent's `.md` file.

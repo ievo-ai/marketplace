@@ -59,10 +59,10 @@ agents:
       - acceptance
 
   # ── Evolution & quality agents ─────────────────────────────
-  - name: evo
-    version: 0.2.0
-    file: agents/evo.md
-    description: "Pipeline quality observer — error analysis at every transition, mutation proposals"
+  - name: evolution
+    version: 0.3.0
+    file: agents/evolution.md
+    description: "Pipeline quality observer — analyzes transitions, distills evolution signals to curator"
     model: sonnet
     category: evolution
     mandatory: true
