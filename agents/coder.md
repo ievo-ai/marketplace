@@ -261,6 +261,14 @@ This is normal. Plans are hypotheses — Architect will revise.
 **"I found a bug in already-implemented code"**
 → Do NOT fix it now. Create a new requirement: REQ-xxx-bugfix.md with status: ready.
 
+**"The PR is blocked"**
+→ Collect ALL blockers before fixing any. Run a full PR health check:
+1. CI status — are all checks passing?
+2. Reviewer decisions — any change requests or unresolved comments?
+3. Branch freshness — is the branch up to date with base?
+4. Merge state — any conflicts?
+Report all blockers in a single summary FIRST, then fix them in order.
+
 ## Iteration Report Format
 
 ```
