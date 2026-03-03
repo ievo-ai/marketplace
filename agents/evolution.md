@@ -136,7 +136,7 @@ Append to `.ievo/evolution/evolution.md`:
 
 Issues are **public**. Before creating the issue, strip ALL sensitive data:
 
-- **File paths**: replace absolute paths with relative (e.g., `/Users/denis/projects/foo/src/auth.py` → `src/auth.py`)
+- **File paths**: replace absolute paths with relative (e.g., `/home/user/projects/myapp/src/auth.py` → `src/auth.py`)
 - **Tokens/secrets**: NEVER include API keys, tokens, passwords, env var values. Reference by name only (e.g., "the `DATABASE_URL` was misconfigured")
 - **Internal URLs**: replace with generic descriptions (e.g., "internal API endpoint")
 - **User data**: no PII, no real usernames, no email addresses
