@@ -50,9 +50,15 @@ Append to `.ievo/evolution/<your-agent-name>.md`:
 **Lesson:** <actionable rule to prevent recurrence>
 ```
 
-### 4. Continue Working
+### 4. Delegate to Evolution Agent
 
-Don't stop for lengthy analysis. Log the entry and move on. The Evolution agent will pick it up at the next pipeline gate and decide whether to create a curator issue.
+After logging the entry, delegate to the `evolution` agent:
+
+```
+Use the evolution agent to analyze this finding and create a curator issue if needed.
+```
+
+The evolution agent will sanitize the finding, create a GitHub issue in `ievo-ai/curator`, and propose a mutation.
 
 ## Rules
 

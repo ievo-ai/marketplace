@@ -118,7 +118,7 @@ After every analysis that produces a finding (confidence ≥ 30%), distill it in
 
 ### Step 1: Log locally
 
-Append to `.ievo/evolution/evolution.md`:
+Append to `.ievo/evolution/<agent-name>.md` (the agent that made the error, NOT `evolution.md`):
 
 ```markdown
 ## YYYY-MM-DD: <brief title>
