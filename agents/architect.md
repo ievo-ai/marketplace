@@ -88,6 +88,17 @@ When planning implementation:
 - Are there shared interfaces that need updating?
 - Could this break already-implemented requirements?
 
+## Git Workflow Guard
+
+Before writing commit steps in any plan, check `DECISIONS.md` for a git workflow decision (branch model, branch naming, PR target). If no such entry exists:
+
+1. Create `.ievo/spec/questions/Q-xxx-git-flow.md` asking the user:
+   - Branch model (trunk-based, gitflow, etc.)
+   - Branch naming convention
+   - PR target branch (main, develop, etc.)
+2. Do NOT specify commit targets or branch names in the plan until answered
+3. Once answered, record as a `D-xxx` entry in `DECISIONS.md`
+
 ## Core Workflow
 
 1. **Read requirements** — understand ALL REQs assigned to you. Check SPEC_INDEX.md for priorities.
@@ -121,6 +132,7 @@ When planning implementation:
 ## Pre-conditions
 - [ ] REQ-yyy must be implemented (dependency)
 - [ ] <file/module> must exist
+- [ ] Git workflow confirmed in DECISIONS.md (branch model, naming, PR target)
 
 ## Sub-tasks (if requirement is large)
 
