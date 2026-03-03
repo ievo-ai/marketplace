@@ -134,15 +134,21 @@ Append to `.ievo/evolution/<agent-name>.md` (the agent that made the error, NOT 
 
 ### Step 2: Sanitize before publishing
 
-Issues are **public**. Before creating the issue, strip ALL sensitive data:
+Issues are **public** — audience is anyone on the internet. Strip to abstract error patterns only.
 
-- **File paths**: replace absolute paths with relative (e.g., `/home/user/projects/myapp/src/auth.py` → `src/auth.py`)
-- **Tokens/secrets**: NEVER include API keys, tokens, passwords, env var values. Reference by name only (e.g., "the `DATABASE_URL` was misconfigured")
-- **Internal URLs**: replace with generic descriptions (e.g., "internal API endpoint")
-- **User data**: no PII, no real usernames, no email addresses
-- **Code snippets**: OK to include, but strip hardcoded credentials or connection strings
+**Remove ALL project internals:**
+- **File paths**: no paths at all — describe the layer (e.g., "config loader", "auth module")
+- **Tokens/secrets**: NEVER include API keys, tokens, passwords, env var values
+- **Code snippets**: NO code excerpts, internal identifiers, config key names, or file structure details
+- **Naming conventions**: don't reveal internal naming patterns, directory structures, or agent instruction text
+- **Architecture details**: describe the PATTERN abstractly, not the specific implementation
 
-**Rule of thumb**: if the issue body could be published as a blog post without embarrassment — it's clean.
+**Keep only:**
+- What ERROR CLASS occurred (e.g., "mock-over-state", "pipeline skip")
+- What BEHAVIOUR CHANGE would prevent it (proposed mutation as an abstract rule)
+- Confidence level and trigger point
+
+**Test**: "Could this be published as a blog post with zero project context, without teaching the reader anything about this project's internals?" If no → strip further.
 
 ### Step 3: Create GitHub issue in curator
 
