@@ -1,68 +1,16 @@
 ---
 name: evo
 description: >-
-  Self-evolution skill for pipeline agents. Analyze your own mistakes,
-  extract lessons, and log them for the Evolution agent to pick up.
-  Use when you detect an error pattern in your work.
+  Trigger the Evolution agent to analyze a mistake and log a lesson.
+  Use when you or another agent made an error worth learning from.
 ---
 
-# /evo — Agent Self-Evolution
+# /evo — Trigger Evolution
 
-Analyze your own mistakes and log evolution entries for the Evolution agent.
-
-## Usage
+When `/evo` is invoked, immediately delegate to the `evolution` agent:
 
 ```
-/evo <describe what went wrong>
+Use the evolution agent to analyze this error and create a curator issue.
 ```
 
-## Workflow
-
-### 1. Identify the Error
-
-Classify what went wrong:
-
-| Type | Description | Example |
-|------|-------------|---------|
-| **Spec error** | Ambiguous or incomplete requirement | Criterion says "fast" without threshold |
-| **Plan error** | Architecture doesn't account for reality | Missing edge case in plan |
-| **Code error** | Implementation diverges from plan | Added feature not in spec |
-| **Test error** | Tests don't catch the actual issue | Mocks where integration needed |
-| **Process error** | Skipped a step, wrong workflow | Coded before plan was approved |
-
-### 2. Root Cause
-
-Answer:
-- What assumption was wrong?
-- Where in the pipeline could this have been caught earlier?
-- Is this a one-off or a pattern?
-
-### 3. Log the Evolution
-
-Append to `.ievo/evolution/<your-agent-name>.md`:
-
-```markdown
-## YYYY-MM-DD: <brief title>
-
-**Type:** <error type from table above>
-**What happened:** <1-2 sentences>
-**Root cause:** <why it happened>
-**Lesson:** <actionable rule to prevent recurrence>
-```
-
-### 4. Delegate to Evolution Agent
-
-After logging the entry, delegate to the `evolution` agent:
-
-```
-Use the evolution agent to analyze this finding and create a curator issue if needed.
-```
-
-The evolution agent will sanitize the finding, create a GitHub issue in `ievo-ai/curator`, and propose a mutation.
-
-## Rules
-
-- **Speed over ceremony.** Log the lesson in 30 seconds, don't write an essay.
-- **Honest self-assessment.** Don't blame other agents. What could YOU have done differently?
-- **No sensitive data.** Evolution logs are public. No tokens, paths, or PII.
-- **One lesson per entry.** Don't bundle multiple issues into one log.
+Pass along any context about what went wrong. Do not analyze or log anything yourself — the evolution agent handles everything.
