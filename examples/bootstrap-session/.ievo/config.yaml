@@ -4,3 +4,10 @@
 project:
   name: my-project
   description: ""
+
+agents:
+  - spec-writer
+  - architect
+  - coder
+  - acceptance
+  - docs
