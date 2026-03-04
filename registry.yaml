@@ -38,6 +38,26 @@ agents:
     dependencies:
       - architect
 
+  - name: code-reviewer
+    version: 0.1.0
+    file: agents/code-reviewer.md
+    description: "Code quality reviewer — docstrings, types, patterns, security"
+    model: sonnet
+    category: core
+    mandatory: true
+    dependencies:
+      - coder
+
+  - name: qa
+    version: 0.1.0
+    file: agents/qa.md
+    description: "Quality assurance — edge cases, E2E scenarios, exploratory testing"
+    model: sonnet
+    category: core
+    mandatory: true
+    dependencies:
+      - code-reviewer
+
   - name: acceptance
     version: 0.2.0
     file: agents/acceptance.md
@@ -46,7 +66,7 @@ agents:
     category: core
     mandatory: true
     dependencies:
-      - coder
+      - qa
 
   - name: docs
     version: 0.2.0
@@ -83,6 +103,15 @@ agents:
     description: "Consistency guardian — detects rule drift, missing rules, stale docs"
     model: haiku
     category: evolution
+    mandatory: true
+    dependencies: []
+
+  - name: tech-lead
+    version: 0.1.0
+    file: agents/tech-lead.md
+    description: "Project infrastructure — tooling config, CI/CD, MkDocs, quality standards"
+    model: sonnet
+    category: management
     mandatory: true
     dependencies: []
 

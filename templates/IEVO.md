@@ -19,7 +19,10 @@
 │   └── changes/      # CR-NNN-<slug>.md
 ├── plans/            # Implementation plans (PLAN-REQ-xxx)
 ├── reports/          # Verification results
+│   ├── review/       # REVIEW-REQ-xxx.md (code review)
+│   ├── qa/           # QA-REQ-xxx.md (QA testing)
 │   ├── acceptance/   # ACC-REQ-xxx.md, ACC-REQ-xxx-rN.md (revisions)
+│   ├── tech-lead/    # AUDIT-YYYY-MM-DD.md (infrastructure audits)
 │   └── defrag/       # DEFRAG-YYYY-MM-DD.md
 ├── evolution/        # Per-agent local evolution overlays
 │   └── <agent>.md    # Project-specific rules learned by each agent
@@ -51,6 +54,12 @@ Session starts → memory/sessions/NNN/plan.md (intent, goals, scope)
   │    ↓
   │  Coder → src/ + tests/
   │    ↓
+  │  Code Reviewer → reports/review/REVIEW-REQ-xxx.md
+  │    ↓ NEEDS CHANGES → Coder fixes → re-review
+  │    ↓ PASS
+  │  QA → reports/qa/QA-REQ-xxx.md (+ additional tests)
+  │    ↓ BUGS FOUND → Q-file → Coder fixes → re-QA
+  │    ↓ PASS
   │  Acceptance → reports/acceptance/ACC-REQ-xxx.md
   │    ↓ FAIL → Coder fixes → ACC-REQ-xxx-r2.md (revision)
   │    ↓ PASS → status = implemented
@@ -64,13 +73,14 @@ Session ends → memory/sessions/NNN/log.md (reality, artifacts, commits)
 ## Requirement Statuses
 
 ```
-draft → ready → in-progress → implemented | blocked | removed
+draft → ready → in-progress → review → implemented | blocked | removed
 ```
 
 - `draft` — has ambiguities, not ready for implementation
 - `ready` — fully specified, agent can pick it up
 - `blocked` — agent found ambiguities, questions filed
 - `in-progress` — agent is currently implementing
+- `review` — implementation complete, in code review / QA / acceptance pipeline
 - `implemented` — all acceptance criteria met, all tests passing
 - `removed` — deleted via Change Request
 
@@ -201,6 +211,9 @@ Curator/Eva review → if valuable, update agent in marketplace
 | Plan | `PLAN-REQ-NNN.md` | `.ievo/plans/` |
 | Acceptance Report | `ACC-REQ-NNN.md` | `.ievo/reports/acceptance/` |
 | Revision | `ACC-REQ-NNN-rN.md` | `.ievo/reports/acceptance/` |
+| Code Review | `REVIEW-REQ-NNN.md` | `.ievo/reports/review/` |
+| QA Report | `QA-REQ-NNN.md` | `.ievo/reports/qa/` |
+| Tech Lead Audit | `AUDIT-YYYY-MM-DD.md` | `.ievo/reports/tech-lead/` |
 | Defrag Report | `DEFRAG-YYYY-MM-DD.md` | `.ievo/reports/defrag/` |
 | Idea | `IDEA-NNN-<slug>.md` | `.ievo/backlog/` |
 | Proposal | `PROP-NNN-<slug>.md` | `.ievo/backlog/` |
@@ -226,7 +239,10 @@ Curator/Eva review → if valuable, update agent in marketplace
 ## Agent Pipeline
 
 ```
-Backlog → Spec Writer → [Evolution] → Sprint → Architect → [Evolution] → Coder → [Evolution] → Acceptance → [Evolution] → Docs → Done
+Backlog → Spec Writer → [Evolution] → Sprint → Architect → [Evolution]
+  → Coder → [Evolution] → Code Reviewer → QA → Acceptance → [Evolution] → Docs → Done
+
+Tech Lead — runs post-init, periodically, or on demand (infrastructure audits)
 ```
 
 ### Agent Discovery
@@ -244,9 +260,14 @@ Read each agent's `.md` file to understand its role, tools, and when to delegate
 | Break down features into requirements | `spec-writer` |
 | Create implementation plans | `architect` |
 | Write code and tests | `coder` |
+| Review code quality (docstrings, types, patterns) | `code-reviewer` |
+| Write additional test scenarios (edge cases, E2E) | `qa` |
 | Verify acceptance criteria | `acceptance` |
 | Update documentation | `docs` |
+| Manage project tooling & CI | `tech-lead` |
 | Log lessons from mistakes | `evolution` |
 | Research external tools/APIs | `researcher` |
+| Audit consistency across pipeline | `defrag` |
+| Manage agent team | `hr` |
 
 Agent-specific instructions are in each agent's `.md` file.
