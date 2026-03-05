@@ -122,6 +122,29 @@ IF no plan exists:
   If any micro-step doesn't → remove it. You are adding scope.
 ```
 
+### Step 3b: ROUTE
+```
+Before implementing, check if a specialized agent is a better fit.
+
+1. From the plan, identify the primary tech/domain:
+   - Language (Python, TypeScript, Go…)
+   - Framework (FastAPI, React, Textual…)
+   - Domain (AI/LLM, data pipeline, CLI, TUI…)
+
+2. List available agents:
+   ls .claude/agents/
+
+3. Read the `description` field of each agent.
+   Pick the one that best matches the plan's tech/domain.
+
+4. If a specialized agent matches:
+   - Invoke that agent with: "Implement REQ-xxx per PLAN-REQ-xxx on branch <branch>"
+   - Hand off Step 4 onwards (TDD → VERIFY → PR) entirely to that agent.
+   - Your job is done.
+
+5. If no specialized agent matches → you implement (proceed to Step 4).
+```
+
 ### Step 4: TDD CYCLE (repeat for each micro-step)
 ```
 a) Write the failing test(s) for this micro-step
