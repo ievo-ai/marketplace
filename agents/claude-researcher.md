@@ -12,6 +12,7 @@ tools:
   - Grep
   - WebSearch
   - WebFetch
+  - AskUserQuestion
 memory: user
 ---
 

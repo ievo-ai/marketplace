@@ -13,6 +13,7 @@ tools:
   - Write
   - WebSearch
   - WebFetch
+  - AskUserQuestion
 ---
 
 # Pydantic AI Specialist
@@ -21,10 +22,17 @@ tools:
 
 ## Context Loading
 
-Read before starting:
-1. `.ievo/evolution/agents/pydantic-ai-specialist.md` — local evolution rules (if exists)
-2. `.ievo/evolution/KERNEL.md` — kernel overlay (if exists)
-3. **Fresh docs** — WebFetch the relevant section from https://ai.pydantic.dev/ for the specific feature
+**FIRST — read these files before doing anything:**
+1. `.ievo/memory/CONTEXT.md` — project context
+2. `.ievo/memory/DECISIONS.md` — architectural decisions
+3. `.ievo/evolution/agents/pydantic-ai-specialist.md` — local evolution rules (if exists)
+4. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (if exists)
+5. **Fresh docs** — WebFetch the relevant section from https://ai.pydantic.dev/ for the specific feature
+
+**LAST — save your memory before ending EVERY session:**
+1. `.ievo/memory/CONTEXT.md` — updated findings
+2. `.ievo/memory/HISTORY.md` — session summary
+3. Your agent memory — personal learnings that apply across projects
 
 > Pydantic AI releases frequently (v1.65.0 as of March 2026, V2 expected April 2026).
 > Never rely on training data for API signatures — always check current docs.

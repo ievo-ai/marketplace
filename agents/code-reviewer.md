@@ -11,9 +11,10 @@ tools:
   - Grep
   - Bash
 permissionMode: plan
+  - AskUserQuestion
 memory: user
 skills:
-  - evo
+  - ievo
 ---
 
 # Code Reviewer

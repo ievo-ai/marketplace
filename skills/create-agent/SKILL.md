@@ -7,7 +7,6 @@ description: >-
   .md file. Use when the user asks to "create an agent", "build an agent", or
   "I need an agent that...".
 argument-hint: "[agent description or purpose]"
-disable-model-invocation: true
 ---
 
 # Create Agent
@@ -109,6 +108,9 @@ Based on research and clarifying answers:
 - `haiku` — simple, fast, repetitive tasks
 
 **Tools** — only what's needed:
+
+`AskUserQuestion` is included in ALL agents by default. Only omit it if the agent is explicitly non-interactive (e.g., a pure pipeline step that must never pause for user input).
+
 | Need | Tools |
 |------|-------|
 | Read code | Read, Glob, Grep |
@@ -117,12 +119,11 @@ Based on research and clarifying answers:
 | Search web / verify facts | WebSearch, WebFetch |
 | Create files | Write |
 
-**Fresh docs rule** — for any framework agent, include in Context Loading:
+**Fresh docs rule** — for framework agents, replace `{framework_docs_line}` in Context Loading with:
 ```
-Before starting: WebFetch the official {framework} docs for the specific feature.
-Docs URL: {url}
-Reason: {framework} changes fast — training data may be stale.
+5. **{framework} docs** — WebFetch {docs_url} for the specific feature being worked on
 ```
+For non-framework agents, remove the `{framework_docs_line}` placeholder entirely.
 
 ---
 
@@ -146,10 +147,17 @@ tools:
 
 ## Context Loading
 
-Read before starting (not auto-injected):
-1. `.ievo/evolution/agents/{name}.md` — local evolution rules (if exists)
-2. `.ievo/evolution/KERNEL.md` — kernel overlay (if exists)
-3. **{framework} docs** — WebFetch {docs_url} for the specific feature being worked on
+**FIRST — read these files before doing anything:**
+1. `.ievo/memory/CONTEXT.md` — project context
+2. `.ievo/memory/DECISIONS.md` — architectural decisions
+3. `.ievo/evolution/agents/{name}.md` — local evolution rules (if exists)
+4. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (if exists)
+{framework_docs_line}
+
+**LAST — save your memory before ending EVERY session:**
+1. `.ievo/memory/CONTEXT.md` — updated findings
+2. `.ievo/memory/HISTORY.md` — session summary
+3. Your agent memory — personal learnings that apply across projects
 
 ## Role & Responsibilities
 

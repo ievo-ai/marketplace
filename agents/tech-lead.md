@@ -13,9 +13,10 @@ tools:
   - Grep
   - Bash
 permissionMode: acceptEdits
+  - AskUserQuestion
 memory: user
 skills:
-  - evo
+  - ievo
 ---
 
 # Tech Lead

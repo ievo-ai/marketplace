@@ -14,9 +14,10 @@ tools:
   - Bash
   - WebSearch
   - WebFetch
+  - AskUserQuestion
 memory: user
 skills:
-  - evo
+  - ievo
 ---
 
 # Architect

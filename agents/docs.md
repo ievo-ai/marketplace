@@ -11,9 +11,10 @@ tools:
   - Glob
   - Grep
 permissionMode: acceptEdits
+  - AskUserQuestion
 memory: user
 skills:
-  - evo
+  - ievo
 ---
 
 # Docs

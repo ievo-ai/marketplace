@@ -13,9 +13,10 @@ tools:
   - Grep
   - WebSearch
   - WebFetch
+  - AskUserQuestion
 memory: user
 skills:
-  - evo
+  - ievo
 ---
 
 # Researcher

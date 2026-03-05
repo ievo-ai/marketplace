@@ -10,6 +10,7 @@ tools:
   - Glob
   - Grep
 permissionMode: plan
+  - AskUserQuestion
 memory: user
 ---
 

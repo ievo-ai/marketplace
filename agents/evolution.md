@@ -12,6 +12,7 @@ tools:
   - Glob
   - Grep
   - Bash
+  - AskUserQuestion
 memory: user
 skills:
   - backlog

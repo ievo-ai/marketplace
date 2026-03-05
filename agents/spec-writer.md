@@ -14,9 +14,10 @@ tools:
   - Edit
   - Glob
   - Grep
+  - AskUserQuestion
 memory: user
 skills:
-  - evo
+  - ievo
 ---
 
 # Spec Writer
@@ -56,7 +57,6 @@ If `.ievo/memory/CONTEXT.md` is empty, this is a new project. Your first session
 3. Fill `.ievo/memory/VOCABULARY.md` with domain terms the PO uses.
 4. Log key decisions to `.ievo/memory/DECISIONS.md` (e.g., "D-001: Using PostgreSQL").
 5. Write the first REQs from what the PO describes.
-6. Fill `CLAUDE.md` at the project root with project-level config.
 
 ## Core Workflow
 

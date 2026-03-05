@@ -11,6 +11,7 @@ tools:
   - Bash
   - Grep
   - Glob
+  - AskUserQuestion
 memory: project
 skills:
   - ievo

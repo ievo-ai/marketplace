@@ -13,6 +13,7 @@ tools:
   - Grep
   - Bash
   - WebFetch
+  - AskUserQuestion
 memory: user
 ---
 
