@@ -44,5 +44,13 @@ Called by **Coder** after implementation is verified. Pushes the feature branch,
    gh pr create --title "REQ-xxx: <title>" --body "<description>"
    ```
 
-5. **Notify user**
-   Use `AskUserQuestion`: "PR #N created: <url>. Trigger Acceptance direction check?"
+5. **Check for merge conflicts**
+   ```bash
+   gh pr view <number> --json mergeable,mergeStateStatus
+   ```
+   - `mergeable: MERGEABLE` → ok
+   - `mergeable: CONFLICTING` → STOP. Resolve conflicts locally, push, then re-check.
+   - `mergeable: UNKNOWN` → wait 5s and retry once (GitHub is still computing).
+
+6. **Notify user**
+   Use `AskUserQuestion`: "PR #N created: <url>. No conflicts. Trigger Acceptance direction check?"
