@@ -50,23 +50,65 @@ logs:
 
 Log entry format: `- <ISO-timestamp>  [<agent>]  <event>`
 
-Events to log:
-- `started — REQ-xxx status: <status>` (pipeline start/resume)
-- `STARTED` (agent begins work)
-- `PASS — <brief outcome>`
-- `FAIL — <brief reason>`
-- `RETRY <N>` (attempt N of max)
-- `BLOCKED — <reason>` (max retries exceeded, human needed)
-- `pr: <N> opened`
-- `docs updated — CONTEXT.md + decisions.md`
-- `pr: <N> merged — done`
-
 **On every start:**
 1. Check `.ievo/pipeline-run/` for an existing run file matching active REQ
 2. If found → resume from `stage`, skip completed stages
 3. If not found → create file with empty `logs: []`, start from Step 1 (SCAN)
 
 **After every stage transition:** update `stage`, `attempts`, append to `logs`.
+
+## Task History
+
+Pipeline writes a detailed history to `tasks/<id>/history.md` after each agent completes.
+This file is permanent (survives after pipeline-run file is deleted).
+
+**Format:**
+
+```markdown
+## 2026-03-05 17:20 — [spec-writer] STARTED
+
+Reviewing feature request. Domain research: checked .ievo/research/ — no prior
+research on Cortex. Invoked researcher for GitHub Releases API patterns.
+
+Decomposed into 7 acceptance criteria. Created Q-001..Q-004 for open questions:
+- Q-001: Who builds artifacts — Cortex CI or CLI at install time?
+- Q-002: Full repo clone or pre-built asset download?
+- Q-003: Version pinning or floating latest?
+- Q-004: Claude-only or Claude + Codex at launch?
+
+Status → blocked, awaiting PO answers.
+
+## 2026-03-05 17:35 — [architect-reviewer] FAIL
+
+Reviewed PLAN-REQ-001. Two issues found:
+
+1. **AC-4 contradiction**: plan says "exit 1 on download failure" but AC-4 says "exit 0
+   with warning". These are mutually exclusive.
+2. **15-min rule violation**: Step 1 (repo scaffold + CI + build script) estimated at
+   25 min. Must split.
+
+Returned to architect for revision.
+
+## 2026-03-05 17:38 — [architect] PASS (revision)
+
+Fixed both issues:
+- AC-4: changed step to exit 0 + warning message with URL
+- Step 1 split into: 1a (repo scaffold, 10min) + 1b (CI pipeline, 10min)
+
+Plan resubmitted.
+```
+
+**Rules for history entries:**
+- Every agent writes a section when it starts AND when it finishes
+- Include WHAT was done, WHY decisions were made, WHAT was rejected and why
+- On FAIL: list every issue found with specific file/line references
+- On PASS after FAIL: explain what was fixed and how
+- Agent comments and inter-agent communication go here
+- Keep it factual — no filler, but don't skip details that explain the "why"
+
+**Pipeline responsibility:** after invoking each agent, append the agent's output
+summary to `tasks/<id>/history.md`. If the agent doesn't write history itself,
+pipeline writes it based on the agent's return value.
 **On PASS final (merge):** delete the run file.
 
 ## Context Loading
@@ -276,6 +318,7 @@ Done (after Stage 6 or skip) →
 - **Max retries.** 3 per verification stage, 2 for architect-reviewer. Escalate after.
 - **One REQ at a time.** Finish before starting next.
 - **Pass PR number explicitly** to all verification agents. Read from `gh pr list --json number,headRefName`.
+- **History after every agent.** After each agent returns, append a detailed entry to `tasks/<id>/history.md`. Include the agent's instructions in every invoke: "Write a detailed summary of your work to tasks/<id>/history.md before returning."
 
 ## Evolution
 
