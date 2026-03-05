@@ -136,8 +136,34 @@ Priority scoring formula (from iEVO.md): `score = (priority_weight×3) + (blocki
 - Not specified → medium + question
 
 ### Step 8: UPDATE INDEX + MEMORY
-1. Add new REQs to `.ievo/spec/SPEC_INDEX.md`
+1. Add new REQs to `.ievo/spec/SPEC_INDEX.md` with status `draft`
 2. Update your memory files in `.ievo/memory/` (CONTEXT, DECISIONS, VOCABULARY, HISTORY)
+
+### Step 9: HUMAN APPROVAL
+
+After writing the REQ file(s), show the spec to the user before setting status to `ready`.
+
+Use `AskUserQuestion`:
+```
+REQ-xxx draft: <title>
+
+Acceptance criteria:
+- AC-1: <criterion>
+- AC-2: <criterion>
+...
+
+Not in scope: <list>
+
+Open questions: <list of Q-xxx, or "none">
+
+Approve (status → ready) or describe changes needed.
+```
+
+- **Approved** → set `status: ready` in SPEC_INDEX.md. Return `PASS: REQ-xxx ready`.
+- **Changes requested** → revise the REQ file, re-show (loop until approved).
+- **Has open questions** → leave status `draft`, show questions to user inline, wait for answers before looping.
+
+This gate is MANDATORY. Never set status `ready` without explicit user approval.
 
 ## Conversation Mode
 
@@ -154,7 +180,8 @@ Workflow in conversation mode:
 3. Propose decomposition: "I'd split this into N requirements: ..."
 4. Discuss with user, iterate
 5. When agreed — write the REQ files
-6. Save memory
+6. Show spec to user (Step 9) — get approval before marking ready
+7. Save memory
 
 This is the PREFERRED mode. Q-files are for when you can't talk to the user (automated pipeline from GitHub Issues).
 

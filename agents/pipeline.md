@@ -39,14 +39,34 @@ pr: 42          # set when PR is opened
 stage: impl     # current stage: spec|arch|arch-review|impl|direction|code-review|qa|acceptance
 attempts: 1     # retry count for current stage
 updated: 2026-03-05T14:00:00Z
+logs:
+  - 2026-03-05T14:00:00Z  [pipeline]       started — REQ-001 status: ready
+  - 2026-03-05T14:01:00Z  [architect]      STARTED — writing PLAN-REQ-001
+  - 2026-03-05T14:08:00Z  [architect]      PASS — plan written
+  - 2026-03-05T14:08:00Z  [arch-reviewer]  STARTED
+  - 2026-03-05T14:10:00Z  [arch-reviewer]  PASS — plan-approved
+  - 2026-03-05T14:10:00Z  [team-lead]      STARTED — routing to coder
 ```
+
+Log entry format: `- <ISO-timestamp>  [<agent>]  <event>`
+
+Events to log:
+- `started — REQ-xxx status: <status>` (pipeline start/resume)
+- `STARTED` (agent begins work)
+- `PASS — <brief outcome>`
+- `FAIL — <brief reason>`
+- `RETRY <N>` (attempt N of max)
+- `BLOCKED — <reason>` (max retries exceeded, human needed)
+- `pr: <N> opened`
+- `docs updated — CONTEXT.md + decisions.md`
+- `pr: <N> merged — done`
 
 **On every start:**
 1. Check `.ievo/pipeline-run/` for an existing run file matching active REQ
 2. If found → resume from `stage`, skip completed stages
-3. If not found → create file, start from Step 1 (SCAN)
+3. If not found → create file with empty `logs: []`, start from Step 1 (SCAN)
 
-**After every stage transition:** update `stage` and `attempts` in the file.
+**After every stage transition:** update `stage`, `attempts`, append to `logs`.
 **On PASS final (merge):** delete the run file.
 
 ## Context Loading
@@ -206,14 +226,28 @@ Invoke the `acceptance` agent:
 ```
 
 ```
-PASS →
-  1. gh pr ready <N>
-  2. AskUserQuestion: "REQ-xxx accepted. PR #N is ready to merge: <url>"
-  STOP — user merges.
-
+PASS → Stage 5
 FAIL → invoke team-lead: "Fix acceptance gaps in PR #N: <gaps>"
        Re-run Stage 4 (max 3 attempts)
        After 3 → AskUserQuestion: "Acceptance stuck: <summary>."  STOP.
+```
+
+#### Stage 5: Docs Update
+
+Update project memory to reflect the completed feature:
+
+1. Set REQ status → `implemented` in `SPEC_INDEX.md`
+2. Append to `.ievo/memory/CONTEXT.md`:
+   - What was built (one paragraph, link to REQ and PR)
+3. Append to `knowledge/decisions.md` any architectural decisions made during implementation
+   (read PLAN-REQ-xxx.md — extract decisions that aren't already recorded)
+4. If REQ affects a public-facing interface (API, CLI commands, config) → update `README.md`
+
+```
+Done →
+  1. Delete run file
+  2. AskUserQuestion: "REQ-xxx done. PR #N is draft — review and merge when ready: <url>"
+  STOP — user reviews and merges.
 ```
 
 ## Rules

@@ -3,7 +3,8 @@ name: acceptance
 description: >
   Full acceptance verification in the iEvo SDD pipeline. Invoked after code-reviewer approves.
   Deep check: every criterion covered, tests real, coverage 100%, docs updated.
-  Produces ACC-REQ-xxx reports in .ievo/reports/acceptance/. PASS → promotes draft PR to ready, notifies user to merge. FAIL → returns to Coder.
+  Produces ACC-REQ-xxx reports in .ievo/reports/acceptance/. Returns PASS or FAIL to pipeline.
+  Does NOT touch the PR status — pipeline handles that after docs update.
 model: opus
 tools:
   - Read
@@ -161,10 +162,10 @@ Write the acceptance report:
 
 ```
 If PASS:
-  - Set requirement status to: implemented
-  - Update SPEC_INDEX.md
+  - Save report to: .ievo/reports/acceptance/ACC-REQ-xxx.md
   - Log: "REQ-xxx verified and accepted"
   - Return: `PASS`
+  - Do NOT set status, do NOT call gh pr ready — pipeline handles both after docs update.
 
 If FAIL:
   - Set requirement status to: ready (back to team-lead)

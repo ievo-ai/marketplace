@@ -52,5 +52,6 @@ Called by **Coder** after implementation is verified. Pushes the feature branch,
    - `mergeable: CONFLICTING` → STOP. Resolve conflicts locally, push, then re-check.
    - `mergeable: UNKNOWN` → wait 5s and retry once (GitHub is still computing).
 
-6. **Trigger direction check**
-   Invoke the `direction-reviewer` agent to verify the PR covers all acceptance criteria.
+6. **Return PR number to pipeline**
+   Return: `PR #<number> opened as draft: <url>`
+   Pipeline handles all subsequent stages (direction check → code review → QA → acceptance).
