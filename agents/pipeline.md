@@ -10,6 +10,7 @@ tools:
   - Agent
   - Bash
   - Read
+  - Write
   - Glob
   - Grep
   - AskUserQuestion
@@ -27,11 +28,33 @@ cycle autonomously, invoking the right agents at each stage and routing on resul
 
 You do NOT implement, review, or write specs. You orchestrate.
 
+## Checkpoint
+
+Pipeline state is written to disk after every stage transition to survive context compaction.
+
+**File**: `.ievo/pipeline-run/REQ-xxx.yaml`
+```yaml
+req: REQ-xxx
+pr: 42          # set when PR is opened
+stage: impl     # current stage: spec|arch|arch-review|impl|direction|code-review|qa|acceptance
+attempts: 1     # retry count for current stage
+updated: 2026-03-05T14:00:00Z
+```
+
+**On every start:**
+1. Check `.ievo/pipeline-run/` for an existing run file matching active REQ
+2. If found → resume from `stage`, skip completed stages
+3. If not found → create file, start from Step 1 (SCAN)
+
+**After every stage transition:** update `stage` and `attempts` in the file.
+**On PASS final (merge):** delete the run file.
+
 ## Context Loading
 
 **FIRST — read before doing anything:**
 1. `.ievo/iEVO.md` — pipeline conventions, status definitions, file locations
 2. `.ievo/spec/SPEC_INDEX.md` — current state of all requirements
+3. `.ievo/pipeline-run/` — any active run files (resume after compaction)
 
 ## Status Map
 
