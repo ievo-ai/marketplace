@@ -125,6 +125,15 @@ agents:
     dependencies: []
 
   # ── Specialists ────────────────────────────────────────────
+  - name: gha-specialist
+    version: 0.1.0
+    file: agents/gha-specialist.md
+    description: "GitHub Actions specialist — validates workflows, audits action versions/health, finds best actions and Python packages"
+    model: sonnet
+    category: specialist
+    mandatory: false
+    dependencies: []
+
   - name: python-pro
     version: 0.1.0
     file: agents/python-pro.md
