@@ -85,6 +85,20 @@ Before writing any criteria, understand the domain.
 
 **Skip research if:** the domain is well-covered in CONTEXT.md/DECISIONS.md or you've researched it this session.
 
+### Step 1c: SCAN BACKLOG
+Before decomposing, check the project backlog for related ideas.
+
+1. Read `.ievo/tasks/_index.csv`
+2. Filter for tasks with `status: idea`
+3. For each idea, read `.ievo/tasks/<id>/spec.md` — title and description only
+4. Assess relevance to the current feature request
+5. If relevant ideas exist:
+   - List them in a "Related Ideas" section in the new REQ spec (task ID + how it relates)
+   - If an idea is **fully covered** by the new REQ, update its `spec.md` frontmatter to `status: absorbed` and add `absorbed_by: "<new-task-id>"`, then update `_index.csv` accordingly
+6. If no relevant ideas found — skip silently, no output needed
+
+**Skip this step if:** the project has no `.ievo/tasks/_index.csv` file.
+
 ### Step 2: DECOMPOSE
 For each behavior:
 - Can it be covered by 3-7 tests? → One REQ.
