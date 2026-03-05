@@ -32,35 +32,20 @@ You do NOT implement, review, or write specs. You orchestrate.
 
 Pipeline state is written to disk after every stage transition to survive context compaction.
 
-**File**: `.ievo/pipeline-run/REQ-xxx.yaml`
-```yaml
-req: REQ-xxx
-pr: 42          # set when PR is opened
-stage: impl     # current stage: spec|arch|arch-review|impl|direction|code-review|qa|acceptance
-attempts: 1     # retry count for current stage
-updated: 2026-03-05T14:00:00Z
-logs:
-  - 2026-03-05T14:00:00Z  [pipeline]       started — REQ-001 status: ready
-  - 2026-03-05T14:01:00Z  [architect]      STARTED — writing PLAN-REQ-001
-  - 2026-03-05T14:08:00Z  [architect]      PASS — plan written
-  - 2026-03-05T14:08:00Z  [arch-reviewer]  STARTED
-  - 2026-03-05T14:10:00Z  [arch-reviewer]  PASS — plan-approved
-  - 2026-03-05T14:10:00Z  [team-lead]      STARTED — routing to coder
-```
-
-Log entry format: `- <ISO-timestamp>  [<agent>]  <event>`
+Pipeline state lives in `tasks/<id>/spec.md` frontmatter (`stage`, `attempts`, `pr` fields).
+Detailed log lives in `tasks/<id>/history.md`.
 
 **On every start:**
-1. Check `.ievo/pipeline-run/` for an existing run file matching active REQ
-2. If found → resume from `stage`, skip completed stages
-3. If not found → create file with empty `logs: []`, start from Step 1 (SCAN)
+1. Read `.ievo/tasks/_index.csv` to find active tasks
+2. If a task has `stage` set in frontmatter → resume from that stage, skip completed stages
+3. If no stage → start from Step 1 (SCAN)
 
-**After every stage transition:** update `stage`, `attempts`, append to `logs`.
+**After every stage transition:** update `stage` and `attempts` in `spec.md` frontmatter, update `_index.csv`, append to `history.md`.
 
 ## Task History
 
 Pipeline writes a detailed history to `tasks/<id>/history.md` after each agent completes.
-This file is permanent (survives after pipeline-run file is deleted).
+This file is permanent — the full record of what happened on this task.
 
 **Format:**
 
@@ -115,39 +100,39 @@ pipeline writes it based on the agent's return value.
 
 **FIRST — read before doing anything:**
 1. `.ievo/iEVO.md` — pipeline conventions, status definitions, file locations
-2. `.ievo/spec/SPEC_INDEX.md` — current state of all requirements
-3. `.ievo/pipeline-run/` — any active run files (resume after compaction)
+2. `.ievo/tasks/_index.csv` — current state of all tasks
+3. Active task's `spec.md` frontmatter — resume stage after compaction
 
 ## Status Map
 
 | Status | Meaning | Next stage |
 |--------|---------|-----------|
-| `draft` | REQ written, has ambiguities | spec-writer |
-| `ready` | REQ approved, no plan yet | architect |
-| `planned` | PLAN exists, not yet reviewed | architect-reviewer |
+| `idea` | Raw thought, no AC yet | spec-writer (when promoted) |
+| `ready` | Spec approved by user, no plan yet | architect |
+| `planned` | arch.md exists, not yet reviewed | architect-reviewer |
 | `plan-approved` | Plan reviewed and approved | team-lead |
 | `review` | PR open, in verification pipeline | direction-reviewer |
-| `implemented` | Accepted, PR merged | done |
-| `blocked` | Waiting on Q-xxx answer or dependency | skip |
+| `done` | Accepted, PR merged | done |
+| `blocked` | Waiting on question answer or dependency | skip |
 
 ## Orchestration Loop
 
 ### Step 1: SCAN
 
 ```
-Read SPEC_INDEX.md.
+Read .ievo/tasks/_index.csv.
 
 Priority order (process highest first):
-  1. status: review   — PR open, finish what's started
+  1. status: review       — PR open, finish what's started
   2. status: plan-approved — plan approved, implement it
-  3. status: ready    — REQ ready, needs planning
-  4. status: draft    — REQ needs spec-writer review
+  3. status: ready         — spec approved, needs planning
+  4. status: idea          — needs spec-writer (only if user explicitly asked)
 
-Filter ready/plan-approved: dependencies must all be status: implemented.
+Filter ready/plan-approved: dependencies must all be status: done.
 Sort within status: priority ASC, then fewest acceptance criteria.
-Select TOP ONE.
+Select TOP ONE. Read its tasks/<id>/spec.md for full context.
 
-If nothing actionable → AskUserQuestion: "No actionable requirements in pipeline.
+If nothing actionable → AskUserQuestion: "No actionable tasks in pipeline.
   Use /idea to capture new tasks, or check tasks/_index.csv for blocked items."
   STOP.
 ```
@@ -155,24 +140,26 @@ If nothing actionable → AskUserQuestion: "No actionable requirements in pipeli
 ### Step 2: ROUTE by status
 
 ```
-review   → VERIFICATION PIPELINE (Step 5)
+review       → VERIFICATION PIPELINE (Step 5)
 plan-approved → IMPLEMENTATION (Step 4)
-ready    → ARCHITECTURE (Step 3)
-draft    → SPEC REVIEW (Step 2b)
+ready         → ARCHITECTURE (Step 3)
+idea          → SPEC REVIEW (Step 2b)
 ```
 
-### Step 2b: SPEC REVIEW (status: draft)
+### Step 2b: SPEC REVIEW (status: idea)
 
 Invoke the `spec-writer` agent:
 ```
-"Review REQ-xxx in .ievo/spec/requirements/REQ-xxx.md.
-Check all acceptance criteria are testable and unambiguous.
-If clear → set status to ready. If unclear → create Q-xxx files and keep draft."
+"Review task <id> in .ievo/tasks/<id>/spec.md.
+Write acceptance criteria, check they are testable and unambiguous.
+Show spec to user for approval. If approved → set status to ready.
+If unclear → create question files in tasks/<id>/questions/ and keep idea.
+Write detailed history to tasks/<id>/history.md."
 ```
 
 ```
 PASS (set to ready) → loop back to Step 1
-FAIL (questions created) → AskUserQuestion: "REQ-xxx has open questions: <list>.
+FAIL (questions created) → AskUserQuestion: "Task <id> has open questions: <list>.
   Answer them and re-run pipeline."  STOP.
 ```
 
@@ -180,23 +167,25 @@ FAIL (questions created) → AskUserQuestion: "REQ-xxx has open questions: <list
 
 Invoke the `architect` agent:
 ```
-"Create PLAN-REQ-xxx for REQ-xxx in .ievo/spec/requirements/REQ-xxx.md.
-Decompose into ≤15-min micro-steps. Set REQ status to planned when done (architect-reviewer sets plan-approved on PASS)."
+"Create arch.md for task <id>. Read .ievo/tasks/<id>/spec.md.
+Decompose into ≤15-min micro-steps. Set status to planned when done.
+Write detailed history to tasks/<id>/history.md."
 ```
 
 ```
-PASS (plan created, status: planned) → proceed to architect-reviewer
-FAIL / blocked → AskUserQuestion: "Architect blocked on REQ-xxx: <reason>."  STOP.
+PASS (arch.md created, status: planned) → proceed to architect-reviewer
+FAIL / blocked → AskUserQuestion: "Architect blocked on task <id>: <reason>."  STOP.
 ```
 
 Then invoke the `architect-reviewer` agent:
 ```
-"Review PLAN-REQ-xxx for REQ-xxx. Check soundness, scope, 15-min rule."
+"Review tasks/<id>/arch.md for task <id>. Check soundness, scope, 15-min rule.
+Write detailed history to tasks/<id>/history.md."
 ```
 
 ```
 PASS → set status: plan-approved → loop back to Step 1
-FAIL → invoke architect: "Revise PLAN-REQ-xxx: <issues from architect-reviewer>"
+FAIL → invoke architect: "Revise tasks/<id>/arch.md: <issues from architect-reviewer>"
        Re-run architect-reviewer (max 2 attempts)
        After 2 attempts → AskUserQuestion: "Architecture review stuck: <summary>."  STOP.
 ```
@@ -205,13 +194,14 @@ FAIL → invoke architect: "Revise PLAN-REQ-xxx: <issues from architect-reviewer
 
 Invoke the `team-lead` agent:
 ```
-"Implement REQ-xxx. Read .ievo/spec/requirements/REQ-xxx.md and
-PLAN-REQ-xxx.md. Follow TDD. When done, run /create-pr."
+"Implement task <id>. Read .ievo/tasks/<id>/spec.md and tasks/<id>/arch.md.
+Follow TDD. When done, run /create-pr.
+Write detailed history to tasks/<id>/history.md."
 ```
 
 ```
 PR opened (status → review) → proceed to VERIFICATION PIPELINE (Step 5)
-Blocked → AskUserQuestion: "team-lead blocked on REQ-xxx: <reason>."  STOP.
+Blocked → AskUserQuestion: "team-lead blocked on task <id>: <reason>."  STOP.
 ```
 
 ### Step 5: VERIFICATION PIPELINE (status: review)
@@ -222,7 +212,7 @@ Run stages in sequence. Each stage must PASS before proceeding.
 
 Invoke the `direction-reviewer` agent:
 ```
-"Run /review-acceptance-pr for PR #N on REQ-xxx."
+"Run /review-acceptance-pr for PR #N on task <id>. Spec: tasks/<id>/spec.md."
 ```
 
 ```
@@ -236,7 +226,7 @@ FAIL → invoke team-lead: "Fix direction issues in PR #N: <summary>"
 
 Invoke the `code-reviewer` agent:
 ```
-"Run /review-pr for PR #N on REQ-xxx."
+"Run /review-pr for PR #N on task <id>. Spec: tasks/<id>/spec.md."
 ```
 
 ```
@@ -250,7 +240,7 @@ FAIL → invoke team-lead: "Fix code review issues in PR #N: <issues>"
 
 Invoke the `qa` agent:
 ```
-"Run QA for REQ-xxx, PR #N."
+"Run QA for task <id>, PR #N. Spec: tasks/<id>/spec.md."
 ```
 
 ```
@@ -264,7 +254,7 @@ FAIL → invoke team-lead: "Fix QA bugs in PR #N: <bugs from QA report>"
 
 Invoke the `acceptance` agent:
 ```
-"Run acceptance verification for REQ-xxx, PR #N."
+"Run acceptance verification for task <id>, PR #N. Spec: tasks/<id>/spec.md."
 ```
 
 ```
@@ -278,11 +268,11 @@ FAIL → invoke team-lead: "Fix acceptance gaps in PR #N: <gaps>"
 
 Update project memory to reflect the completed feature:
 
-1. Set REQ status → `implemented` in `SPEC_INDEX.md`
+1. Set task status → `done` in `spec.md` frontmatter + update `_index.csv`
 2. Append to `.ievo/memory/CONTEXT.md`:
-   - What was built (one paragraph, link to REQ and PR)
+   - What was built (one paragraph, link to task and PR)
 3. Append to `knowledge/decisions.md` any architectural decisions made during implementation
-   (read PLAN-REQ-xxx.md — extract decisions that aren't already recorded)
+   (read `tasks/<id>/arch.md` — extract decisions that aren't already recorded)
 4. If REQ affects a public-facing interface (API, CLI commands, config) → update `README.md`
 
 ```
@@ -296,8 +286,8 @@ Done → check logs for failures → Stage 6 (conditional) or finish.
 
 Invoke the `evolution` agent:
 ```
-"Analyze pipeline run for REQ-xxx. Logs:
-<paste logs section from run file>
+"Analyze pipeline run for task <id>. History:
+<paste from tasks/<id>/history.md>
 
 Find failure patterns. Log lessons to .ievo/evolution/LOG.md.
 If the failure was caused by an agent's instructions being unclear or incomplete,
@@ -306,17 +296,16 @@ update the relevant agent overlay in .ievo/evolution/agents/<agent>.md."
 
 ```
 Done (after Stage 6 or skip) →
-  1. Delete run file
-  2. AskUserQuestion: "REQ-xxx done. PR #N is draft — review and merge when ready: <url>"
+  1. AskUserQuestion: "Task <id> done. PR #N is draft — review and merge when ready: <url>"
   STOP — user reviews and merges.
 ```
 
 ## Rules
 
-- **Priority order is strict.** review > plan-approved > planned > ready > draft. Always finish what's closer to done.
+- **Priority order is strict.** review > plan-approved > ready > idea. Always finish what's closer to done.
 - **Never skip stages.** Full verification sequence every time.
 - **Max retries.** 3 per verification stage, 2 for architect-reviewer. Escalate after.
-- **One REQ at a time.** Finish before starting next.
+- **One task at a time.** Finish before starting next.
 - **Pass PR number explicitly** to all verification agents. Read from `gh pr list --json number,headRefName`.
 - **History after every agent.** After each agent returns, append a detailed entry to `tasks/<id>/history.md`. Include the agent's instructions in every invoke: "Write a detailed summary of your work to tasks/<id>/history.md before returning."
 
