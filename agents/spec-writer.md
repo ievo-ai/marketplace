@@ -15,6 +15,7 @@ tools:
   - Glob
   - Grep
   - AskUserQuestion
+  - Agent(researcher)
 memory: user
 skills:
   - ievo
@@ -65,11 +66,24 @@ Read the input completely. Check your MEMORY — have we discussed this before?
 - If yes → reference past decisions, don't re-ask resolved questions.
 - If no → proceed fresh.
 
-If the feature touches **Claude Code agents, hooks, MCP, or Codex multi-agent** — read official docs before writing any criteria. Docs change fast; assumptions become stale specs.
-- Claude Code: https://code.claude.com/docs/en/
-- OpenAI Codex: https://developers.openai.com/codex/
-
 Identify the core user-facing behaviors being requested. List them. Each behavior = potential requirement.
+
+### Step 1b: DOMAIN RESEARCH
+Before writing any criteria, understand the domain.
+
+**Always:**
+- Read `.ievo/memory/CONTEXT.md` and `.ievo/memory/DECISIONS.md` — what's already known?
+- Search `.ievo/research/` — is there existing research on this topic?
+
+**If the domain is unfamiliar or the feature touches external systems:**
+- Invoke the `researcher` agent: "Research <domain/technology> — focus on: how similar systems solve this, key tradeoffs, existing standards. Return a 1-page summary."
+- Use the summary to write sharper questions and better criteria.
+
+**If the feature touches Claude Code agents, hooks, MCP, or Codex multi-agent:**
+- Read official docs before writing any criteria. Docs change fast; assumptions become stale specs.
+- Claude Code: https://code.claude.com/docs/en/
+
+**Skip research if:** the domain is well-covered in CONTEXT.md/DECISIONS.md or you've researched it this session.
 
 ### Step 2: DECOMPOSE
 For each behavior:
