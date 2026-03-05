@@ -66,11 +66,27 @@ Save findings in the plan's "Research" section. This prevents the Coder from gue
 If the research is too deep for one session, flag it and create a time-boxed research task before proceeding to planning.
 
 ### 2. Implementation Planning
-Given a REQ with status `ready`, write a `## Plan` section directly in `tasks/NNN/spec.md`:
-- Which files to create/modify
-- Micro-steps for the Coder (each independently committable)
-- Which tests to write at each step
-- Dependency order between steps
+Given a REQ with status `ready`, write a `## Plan` section in `tasks/NNN/spec.md` AND create subtask files:
+
+1. Write `## Plan` in `spec.md` — overview, research, architecture assessment, scope guard
+2. Create `tasks/NNN/subtasks/NN/spec.md` for each work unit:
+   ```yaml
+   ---
+   title: "Add build-system to pyproject.toml"
+   status: planned
+   assigned: null          # team-lead fills this
+   deps: []                # deps on other subtasks by number: ["01"]
+   criteria: ["AC-1", "AC-2"]  # which parent ACs this covers
+   ---
+   ## What
+   <description of what to do>
+   ## Tests
+   <specific tests to write>
+   ## Files
+   <files to create/modify>
+   ```
+3. Mark deps between subtasks — subtasks with no deps can be parallelized by team-lead
+4. Each subtask must be ≤15 minutes of agent work and independently committable
 
 ### 3. Complexity Assessment
 If a requirement is too large for one iteration:

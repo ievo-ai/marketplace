@@ -127,31 +127,30 @@ IF no plan exists:
 
 ### Step 3b: ASSIGN & ROUTE
 ```
-Before implementing, find the best agent for the job.
+For each subtask in tasks/NNN/subtasks/:
 
-0. Write `assigned: <agent-name>` in the spec.md YAML frontmatter
-   (use your own name "team-lead" if self-implementing)
-
-1. From the plan, identify the primary tech/domain:
-   - Language (Python, TypeScript, Go…)
-   - Framework (FastAPI, React, Textual…)
-   - Domain (AI/LLM, data pipeline, CLI, TUI…)
+1. Read the subtask spec.md — understand what it needs.
 
 2. List available agents:
    ls .claude/agents/
 
-3. Read the `description` field of each agent.
-   Pick the one that best matches the plan's tech/domain.
+3. Pick the best agent for this subtask's tech/domain.
+   Write `assigned: <agent-name>` in the subtask spec.md frontmatter.
+   (use "team-lead" if self-implementing)
 
-4. If a specialized agent matches:
-   - Invoke that agent: "Implement REQ-xxx per PLAN-REQ-xxx on branch <branch>"
-   - Hand off Step 4 onwards (TDD → VERIFY → PR) entirely to that agent.
-   - Your job is done.
-
-5. If no specialized agent matches — decide: hire or self-implement?
+4. If no specialized agent matches — decide: hire or self-implement?
    - Is this a recurring domain (AI/LLM, mobile, Rust, data…)?
-     YES → run /create-agent to create a specialist, then delegate to it.
-     NO  → you implement (proceed to Step 4).
+     YES → run /create-agent to create a specialist, then delegate.
+     NO  → assign to yourself.
+
+5. Identify parallelizable subtasks:
+   - Subtasks with `deps: []` or whose deps are already done → can run in parallel
+   - Launch parallel agents using multiple Agent tool calls in one message
+   - Sequential subtasks: wait for deps to complete before launching
+
+6. For each subtask, invoke the assigned agent:
+   "Implement subtask NN of task NNN on branch <branch>.
+    Read tasks/NNN/subtasks/NN/spec.md for requirements."
 
 Hiring rule: only hire when the gap is likely to recur. Don't create
 one-off agents. If unsure — implement yourself this time.
