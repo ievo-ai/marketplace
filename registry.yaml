@@ -28,10 +28,10 @@ agents:
     dependencies:
       - spec-writer
 
-  - name: coder
+  - name: team-lead
     version: 0.2.0
-    file: agents/coder.md
-    description: "Plans → TDD code following spec and architecture"
+    file: agents/team-lead.md
+    description: "Dispatcher: routes to specialists, hires via /create-agent, implements directly as fallback"
     model: sonnet
     category: core
     mandatory: true
@@ -46,7 +46,7 @@ agents:
     category: core
     mandatory: true
     dependencies:
-      - coder
+      - team-lead
 
   - name: qa
     version: 0.1.0

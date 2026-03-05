@@ -47,7 +47,7 @@ Install agents from the iEvo marketplace into the project's `.claude/agents/` di
 **Mandatory agents** (core team — always deployed on init):
 - `spec-writer` — requirements analyst
 - `architect` — system architect and planner
-- `coder` — TDD implementer
+- `team-lead` — TDD implementer
 - `acceptance` — quality gate verifier
 - `docs` — documentation writer
 - `researcher` — improvement scanner

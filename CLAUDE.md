@@ -52,7 +52,7 @@ Each agent has:
 |-------|-------|------|
 | spec-writer | sonnet | Features → atomic REQs |
 | architect | opus | REQs → implementation plans |
-| coder | sonnet | Plans → TDD code |
+| team-lead | sonnet | Plans → TDD code |
 
 ## Conventions
 

@@ -172,15 +172,15 @@ If PASS:
     "REQ-xxx accepted. PR #N is ready to merge: <url>"
 
 If FAIL:
-  - Set requirement status to: ready (back to Coder)
+  - Set requirement status to: ready (back to team-lead)
   - Save report to: .ievo/reports/acceptance/ACC-REQ-xxx.md
   - Add gaps as comments in REQ-xxx.md under "## Acceptance Gaps"
   - Update SPEC_INDEX.md
   - Log: "REQ-xxx failed acceptance: [summary of gaps]"
-  - Invoke the `coder` agent to fix the gaps.
+  - Invoke the `team-lead` agent to fix the gaps.
 
-Coder MUST read the acceptance report before re-working.
-Coder re-submits by setting status back to: review.
+Team Lead MUST read the acceptance report before re-working.
+Team Lead re-submits by setting status back to: review.
 This loop continues until PASS. No shortcuts.
 ```
 

@@ -37,4 +37,4 @@ Called by **Code-reviewer** after Acceptance direction check passes. Reviews cod
    ```
    Save report to `.ievo/reports/review/REVIEW-REQ-xxx.md`
    Set requirement status → `in-progress` in SPEC_INDEX.md.
-   Invoke the `coder` agent to fix the issues.
+   Invoke the `team-lead` agent to fix the issues.

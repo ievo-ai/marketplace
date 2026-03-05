@@ -17,7 +17,7 @@ Agent registry for the iEvo self-evolving SDD framework. Install agents like pac
 |-------|-------|-------------|
 | **spec-writer** | sonnet | Features → atomic, testable requirements |
 | **architect** | opus | REQs → implementation plans with TDD strategy |
-| **coder** | sonnet | Plans → TDD code following spec and architecture |
+| **team-lead** | sonnet | Plans → TDD code following spec and architecture |
 
 ## Usage
 
@@ -25,7 +25,7 @@ Agent registry for the iEvo self-evolving SDD framework. Install agents like pac
 pip install ievo
 ievo init my-project
 cd my-project
-ievo add spec-writer architect coder
+ievo add spec-writer architect team-lead
 ievo run spec-writer
 ```
 
