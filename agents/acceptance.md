@@ -177,7 +177,7 @@ If FAIL:
   - Add gaps as comments in REQ-xxx.md under "## Acceptance Gaps"
   - Update SPEC_INDEX.md
   - Log: "REQ-xxx failed acceptance: [summary of gaps]"
-  - Invoke the `coder` agent to fix the gaps.
+  - The implementing agent picks it up on next scan (status: ready).
 
 Coder MUST read the acceptance report before re-working.
 Coder re-submits by setting status back to: review.

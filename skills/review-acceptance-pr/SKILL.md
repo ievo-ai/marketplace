@@ -26,5 +26,4 @@ This is intentionally **shallow** — reads PR description and REQ, does NOT rea
    **FAIL** — any criterion missing or wrong:
    - Comment on PR listing exactly which criteria are missing/wrong
    - Set REQ status → `in-progress` in SPEC_INDEX.md
-   - Invoke the `coder` agent to fix the issues.
-   - STOP — do not trigger code review
+   - STOP — the implementing agent picks it up on next scan
