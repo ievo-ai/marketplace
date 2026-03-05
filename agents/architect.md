@@ -72,6 +72,7 @@ Given a REQ with status `ready`, write a `## Plan` section in `tasks/NNN/spec.md
 2. Create `tasks/NNN/subtasks/NN/spec.md` for each work unit:
    ```yaml
    ---
+   parent: "NNN"           # parent task ID — cross-link back
    title: "Add build-system to pyproject.toml"
    status: planned
    assigned: null          # team-lead fills this
