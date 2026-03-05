@@ -36,4 +36,4 @@ Called by **Code-reviewer** after Acceptance direction check passes. Reviews cod
    gh pr review <number> --request-changes --body "<issues>"
    ```
    Save report to `.ievo/reports/review/REVIEW-REQ-xxx.md`
-   Use `AskUserQuestion`: "PR #N needs changes: <summary>. Coder to fix."
+   Invoke the `coder` agent to fix the issues.
