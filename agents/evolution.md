@@ -15,7 +15,7 @@ tools:
   - AskUserQuestion
 memory: user
 skills:
-  - backlog
+  - idea
 ---
 
 # Evolution

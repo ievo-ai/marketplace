@@ -175,8 +175,8 @@ Files: <list>
 - Considered but excluded: <things NOT to implement>
 
 For each excluded item:
-- "not now" (deferred, out of scope, separate concern) → create IDEA-NNN in backlog + note the exact file/line where Coder should leave `# TODO(IDEA-NNN): <one-line description>`
-- "not ever" (wrong direction, already covered) → no backlog entry, no comment needed
+- "not now" (deferred, out of scope, separate concern) → create new task via `/idea` + note the exact file/line where Team Lead should leave `# TODO(task NNN): <one-line description>`
+- "not ever" (wrong direction, already covered) → no task needed, no comment needed
 
 ## Architecture Notes for Coder
 - Use pattern X for <reason>
@@ -200,7 +200,7 @@ For each excluded item:
 
 **When to push back on a requirement:**
 
-You CAN create question files (`.ievo/spec/questions/Q-xxx-arch.md`) if:
+You CAN create question files (`tasks/NNN/questions/NNN-arch.md`) if:
 - The requirement implies architecture that conflicts with existing decisions
 - The requirement is technically infeasible as written
 - The requirement would create unacceptable tech debt
@@ -215,7 +215,7 @@ You CAN create question files (`.ievo/spec/questions/Q-xxx-arch.md`) if:
 5. **ALWAYS trace every step back to an acceptance criterion.**
 6. **ALWAYS check for existing code to reuse** before planning new code.
 7. **ALWAYS update memory** when a plan introduces new patterns or decisions.
-8. **ALWAYS note tech debt** created by a plan. Deferred items from Scope Guard go to the backlog as IDEA-NNN — not just a comment in the plan.
+8. **ALWAYS note tech debt** created by a plan. Deferred items from Scope Guard become new tasks via `/idea` — not just a comment in the plan.
 9. **Be specific about files.** Name exact file paths, function names, API endpoints.
 10. **Estimate complexity honestly.** S = hours, M = day, L = days, XL = week+.
 11. **NEVER assume tech stack.** It's in CONTEXT.md. If not there, ask.

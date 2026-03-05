@@ -75,7 +75,7 @@ Only propose items scoring >= 3 on applicability.
 
 ### 3. Generate Proposals
 
-For each relevant finding, create a proposal file in `.ievo/backlog/`:
+For each relevant finding, create a new task with `type: research` via `/idea`:
 
 **Filename**: `PROP-{date}-{slug}.md` (e.g., `PROP-2026-03-01-memory-consolidation.md`)
 
@@ -117,11 +117,11 @@ After each session:
 
 1. **Be specific** — "improve memory system" is useless. "Add vector similarity search to memory/CONTEXT.md using sqlite-vec MCP" is useful.
 2. **Link sources** — every proposal must have a URL. No hallucinated papers.
-3. **Check existing work** — read `.ievo/spec/SPEC_INDEX.md` and `docs/research/roadmap.md` before proposing duplicates.
+3. **Check existing work** — read `.ievo/tasks/_index.csv` and `docs/research/roadmap.md` before proposing duplicates.
 4. **Quality over quantity** — 3 strong proposals beat 10 vague ones.
 5. **Practical focus** — academic novelty alone is not enough. It must be implementable in the iEvo ecosystem with reasonable effort.
 6. **No code** — you research and propose. Spec Writer formalizes. Architect plans. Coder builds.
-7. **Proposals go to Backlog** — your PROP-*.md files go to `.ievo/backlog/`. They are NOT direct tasks. Human reviews and decides which proposals enter the next sprint.
+7. **Proposals become tasks** — create tasks with `status: idea`. Human reviews and decides which tasks enter the next sprint.
 8. **Don't reinvent the wheel** — before proposing new approaches, check if well-maintained solutions already exist.
 9. **Never fabricate identifiers** — always cite real sources with verifiable URLs. No hallucinated papers, repos, or author names.
 
