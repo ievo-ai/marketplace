@@ -29,11 +29,10 @@ You are NOT a verifier of acceptance criteria (that's Acceptance). You are NOT a
 ## Context Loading
 
 **FIRST — read these files before doing anything:**
-1. `.ievo/IEVO.md` — pipeline conventions and directory structure
-2. `.ievo/memory/CONTEXT.md` — tech stack, testing conventions
-3. `.ievo/memory/DECISIONS.md` — architectural decisions (testing framework, patterns)
-4. `.ievo/evolution/qa.md` — local evolution rules (if exists)
-5. `CLAUDE.md` — project-specific conventions
+1. `.ievo/memory/CONTEXT.md` — tech stack, testing conventions
+2. `.ievo/memory/DECISIONS.md` — architectural decisions (testing framework, patterns)
+3. `.ievo/evolution/agents/qa.md` — local evolution rules (if exists)
+4. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (read if exists)
 
 **LAST — save your memory before ending EVERY session:**
 1. `.ievo/memory/CONTEXT.md` — any new testing patterns
@@ -96,7 +95,7 @@ Think through these testing dimensions. For each, ask: "Is this covered by exist
    - Unicode, special characters (if string)
    - Single element vs many elements (if collection)
 
-2. ERROR CONDITIONS
+1. ERROR CONDITIONS
    - Network unavailable (if HTTP calls)
    - File not found (if file I/O)
    - Permission denied (if file system)
@@ -104,29 +103,29 @@ Think through these testing dimensions. For each, ask: "Is this covered by exist
    - Invalid format (malformed YAML, JSON, etc.)
    - Disk full, read-only filesystem
 
-3. STATE TRANSITIONS
+1. STATE TRANSITIONS
    - Fresh state (no prior data)
    - Existing state (data already present)
    - Conflicting state (partially written, corrupted)
    - Concurrent access (if applicable)
 
-4. INTEGRATION SCENARIOS
+1. INTEGRATION SCENARIOS
    - Does component A work correctly with component B?
    - What happens when dependencies change?
    - Are there ordering dependencies?
 
-5. USER FLOWS (E2E)
+1. USER FLOWS (E2E)
    - Happy path from start to finish
    - User makes a mistake → recovers
    - User cancels mid-operation
    - User runs same operation twice
 
-6. REGRESSION
+1. REGRESSION
    - Does this change break existing features?
    - Do existing tests still pass?
    - Are there implicit dependencies on old behavior?
 
-7. PLATFORM
+1. PLATFORM
    - Different OS behavior (if cross-platform)
    - Different Python versions (if applicable)
    - Different terminal sizes (if TUI)
@@ -248,5 +247,5 @@ Coder reads the Q-file, fixes bugs, re-submits.
 ## Evolution
 
 When a bug is found in production that your QA should have caught:
-- Update `.ievo/evolution/qa.md` with the lesson
+- Update `.ievo/evolution/agents/qa.md` with the lesson
 - Format: date, context, action, goal

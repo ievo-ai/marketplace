@@ -8,12 +8,11 @@
 ```
 .ievo/
 ├── version           # CLI version that last updated this project
-├── IEVO.md           # This file — pipeline context overlay
+├── iEVO.md           # This file — pipeline context overlay
 ├── config.yaml       # Project settings
 ├── backlog/          # Raw ideas (IDEA-xxx) and research proposals (PROP-xxx)
 ├── spec/             # Requirements (REQ-xxx), questions (Q-xxx), changes (CR-xxx)
 │   ├── SPEC_INDEX.md # Registry of all specs + statuses
-│   ├── PRIORITY.md   # Selection algorithm
 │   ├── requirements/ # REQ-NNN-<slug>.md
 │   ├── questions/    # Q-NNN-<slug>.md, Q-NNN-arch.md (escalations)
 │   └── changes/      # CR-NNN-<slug>.md
@@ -24,8 +23,11 @@
 │   ├── acceptance/   # ACC-REQ-xxx.md, ACC-REQ-xxx-rN.md (revisions)
 │   ├── tech-lead/    # AUDIT-YYYY-MM-DD.md (infrastructure audits)
 │   └── defrag/       # DEFRAG-YYYY-MM-DD.md
-├── evolution/        # Per-agent local evolution overlays
-│   └── <agent>.md    # Project-specific rules learned by each agent
+├── evolution/        # Evolution log + overlays (see EVOLUTION.md)
+│   ├── LOG.md        # Append-only findings journal (write-only)
+│   ├── KERNEL.md     # Kernel overlay — pipeline-level rules (read by all agents)
+│   └── agents/       # Per-agent overlays
+│       └── <agent>.md
 └── memory/           # Shared project memory
     ├── CONTEXT.md    # Project state, entities, architecture
     ├── DECISIONS.md  # Append-only decision log
@@ -52,17 +54,20 @@ Session starts → memory/sessions/NNN/plan.md (intent, goals, scope)
   │    ↓ (plan broken?)
   │  Coder → spec/questions/Q-xxx-arch.md (escalation to Architect)
   │    ↓
-  │  Coder → src/ + tests/
+  │  Coder → src/ + tests/ → push branch → open PR
   │    ↓
+  │  Acceptance (PR check) — right direction? PR description vs REQ criteria
+  │    ↓ WRONG DIRECTION → Coder fixes → new push
+  │    ↓ RIGHT DIRECTION
   │  Code Reviewer → reports/review/REVIEW-REQ-xxx.md
   │    ↓ NEEDS CHANGES → Coder fixes → re-review
   │    ↓ PASS
   │  QA → reports/qa/QA-REQ-xxx.md (+ additional tests)
-  │    ↓ BUGS FOUND → Q-file → Coder fixes → re-QA
+  │    ↓ BUGS FOUND → Coder fixes → re-QA
   │    ↓ PASS
-  │  Acceptance → reports/acceptance/ACC-REQ-xxx.md
+  │  Acceptance (full) → reports/acceptance/ACC-REQ-xxx.md
   │    ↓ FAIL → Coder fixes → ACC-REQ-xxx-r2.md (revision)
-  │    ↓ PASS → status = implemented
+  │    ↓ PASS → merge PR → status = implemented
   │    ↓
   │  Docs → docs/, README.md, CLAUDE.md
   │
@@ -170,35 +175,19 @@ Decisions persist across sessions. When an agent needs to know WHY something was
 
 ## Evolution Overlay
 
-Each agent accumulates project-specific lessons in `.ievo/evolution/<agent>.md`. These files are **local to the project** — they survive agent updates from the marketplace.
+Project-specific lessons accumulate in `.ievo/evolution/` and are loaded as context at each session start. The evolution system has three components:
 
-### How it works
+- **`LOG.md`** — append-only findings journal written by the Evolution agent. Write-only: agents do not load this as context.
+- **`KERNEL.md`** — kernel overlay for pipeline-level lessons (naming conventions, document lifecycle, cross-agent coordination). Read by all agents at session start.
+- **`agents/<agent>.md`** — per-agent overlay for agent-specific lessons. Read by that agent at session start.
 
 ```
-Agent makes a mistake → /evo skill → logs lesson to .ievo/evolution/<agent>.md
-Evolution agent picks it up → creates issue in ievo-ai/curator (evolution_log label)
-Curator/Eva review → if valuable, update agent in marketplace
+Finding in agent behavior        → LOG.md + agents/<agent>.md
+Finding in pipeline conventions  → LOG.md + KERNEL.md
+All findings                     → curator GitHub issue
 ```
 
-### File format
-
-```markdown
-# Evolution: <agent-name>
-
-## YYYY-MM-DD: <brief title>
-
-**Type:** <spec-error|plan-error|code-error|test-error|process-error>
-**What happened:** <1-2 sentences>
-**Root cause:** <why it happened>
-**Lesson:** <actionable rule to prevent recurrence>
-```
-
-### Rules
-
-- **Overlay, not override.** Evolution files ADD rules — they never contradict the agent's base instructions.
-- **Project-specific only.** Generic lessons go to the curator (via Evolution agent issues). Only rules that apply specifically to THIS project belong here.
-- **Append-only.** Never delete entries — they are the learning history.
-- **Survives updates.** When HR agent updates an agent from marketplace, evolution overlays are preserved.
+Read `EVOLUTION.md` for full convention — entry formats, routing rules, context loading template.
 
 ## Naming Conventions
 
@@ -221,10 +210,13 @@ Curator/Eva review → if valuable, update agent in marketplace
 | Session log | `log.md` | `.ievo/memory/sessions/NNN/` |
 | Session index | `HISTORY.md` | `.ievo/memory/` |
 | Decision | `D-NNN` (entry in file) | `.ievo/memory/DECISIONS.md` |
-| Evolution overlay | `<agent>.md` | `.ievo/evolution/` |
+| Evolution log | `LOG.md` | `.ievo/evolution/` |
+| Kernel overlay | `KERNEL.md` | `.ievo/evolution/` |
+| Agent overlay | `<agent>.md` | `.ievo/evolution/agents/` |
 
 ## Pipeline Rules
 
+- **Language**: Communicate with the user in their language. All artifacts (specs, plans, reports, code, comments, documentation) are written in English
 - **15-minute rule**: Architect decomposes every task to ≤15 minutes of agent work
 - **Sprint = agreed REQs**: human approves what enters sprint. Scope is frozen once agreed
 - **Backlog = pre-spec**: raw ideas and proposals, not yet refined into requirements
@@ -232,42 +224,44 @@ Curator/Eva review → if valuable, update agent in marketplace
 - **Coder escalation**: plan broken → `Q-xxx-arch.md` → Architect revises plan
 - **Evolution gates**: Evolution agent observes every pipeline transition (post-spec, post-plan, post-implementation, post-acceptance)
 - **Atomic REQs**: each requirement has 3-7 testable acceptance criteria
-- **Priority scoring**: see `PRIORITY.md` for formula. Agents auto-select highest-value task
+- **Priority scoring**: `score = (priority_weight×3) + (blocking_count×2) + (dependency_met×1) - (complexity×0.5) - (open_questions×5)`. Weights: critical=10, high=7, medium=5, low=3. Rules: CRs before REQs → filter `ready` + deps `implemented` → score → tiebreak by lower REQ number. Agents auto-select highest-value task
 - **Commit authorship**: all agent commits use `Co-Authored-By: iEVO <agent-name> <noreply@ievo.ai>` — never use the default Claude Code footer
-- **Three-layer separation**: `CLAUDE.md` = project context (tech stack, architecture). `.ievo/IEVO.md` = pipeline conventions. `agents/*.md` = agent rules. NEVER write pipeline rules or evolution lessons to `CLAUDE.md` — they belong in agent `.md` files or `.ievo/evolution/`
+- **Three-layer separation**: `CLAUDE.md` = project context (tech stack, architecture). `.ievo/iEVO.md` = pipeline conventions. `agents/*.md` = agent rules. NEVER write pipeline rules or evolution lessons to `CLAUDE.md` — they belong in agent `.md` files or `.ievo/evolution/agents/` (per-agent) / `.ievo/evolution/KERNEL.md` (pipeline)
 
-## Agent Pipeline
+## Best Practices
 
-```
-Backlog → Spec Writer → [Evolution] → Sprint → Architect → [Evolution]
-  → Coder → [Evolution] → Code Reviewer → QA → Acceptance → [Evolution] → Docs → Done
+Proven practices derived from real sessions — apply these by default.
 
-Tech Lead — runs post-init, periodically, or on demand (infrastructure audits)
-```
+> New practices discovered during sessions go to `.ievo/evolution/KERNEL.md`, not here. See `EVOLUTION.md` for the full evolution convention.
 
-### Agent Discovery
+### Requirements & Backlog
 
-Your project has pipeline agents installed in `.claude/agents/`. To see available agents:
+- **Discussion starts in backlog**: every new requirement begins as an `IDEA-NNN` entry in `.ievo/backlog/`, never directly as a REQ. The IDEA file is a living document — it grows through research, interview, and architect assessment until the judge promotes it to REQ.
+- **Always record WHY**: every decision made during discussion must be logged with context — what options were considered, why this one was chosen, who decided. Log to IDEA file or `.ievo/memory/DECISIONS.md`. Without a decision log, context is lost within days and no one remembers why things were done a certain way.
+- **Backlog revival requires full context reload**: when an idea returns from backlog after weeks, always load its discussion log and run a context refresh — what has changed since then, is the original approach still valid?
+- **New requirements during discussion → new IDEA**: if a new requirement emerges during spec elicitation, capture it as a separate IDEA immediately. Do not graft it onto the current requirement's scope without explicit user approval.
 
-```bash
-ls .claude/agents/*.md
-```
+### Research
 
-Read each agent's `.md` file to understand its role, tools, and when to delegate to it. **Always delegate pipeline tasks to the appropriate agent** instead of doing everything yourself:
+- **Verify before trusting research findings**: always check that GitHub repos, star counts, and project names found in research are real. Researchers can hallucinate project names. Apply the "can I open this URL?" test. Flag unverified items with `⚠️ TODO: verify`.
+- **Study adjacent ecosystems**: before building something, check if OpenClaw, IronClaw, Lobster, or similar projects already solved it. Reference implementations save months.
+- **Persist research findings in `.ievo/research/`**: raw research output belongs in `.ievo/research/YYYY-MM-DD-<topic>.md`, not in backlog files or session logs. Backlog files (`IDEA-NNN`, `PROP-NNN`) reference research files — they don't contain raw findings. Update `INDEX.md` in `.ievo/research/` after every new research file. Format: `findings / comparing A vs B and why / conclusion / final decision and why`.
 
-| Task | Agent |
-|------|-------|
-| Break down features into requirements | `spec-writer` |
-| Create implementation plans | `architect` |
-| Write code and tests | `coder` |
-| Review code quality (docstrings, types, patterns) | `code-reviewer` |
-| Write additional test scenarios (edge cases, E2E) | `qa` |
-| Verify acceptance criteria | `acceptance` |
-| Update documentation | `docs` |
-| Manage project tooling & CI | `tech-lead` |
-| Log lessons from mistakes | `evolution` |
-| Research external tools/APIs | `researcher` |
-| Audit consistency across pipeline | `defrag` |
-| Manage agent team | `hr` |
+### Pipeline Design
 
-Agent-specific instructions are in each agent's `.md` file.
+- **Deterministic engine over LLM routing**: pipeline stage transitions must be driven by a deterministic workflow engine (YAML state machine), not by LLMs deciding what to do next. LLMs are unreliable routers — they misinterpret iteration counts and forget to signal transitions.
+- **Hard gates between stages**: every pipeline stage has explicit entry conditions and exit artifacts. The next stage agent checks entry conditions before starting. No stage can claim completion without producing its required artifact.
+- **Judge/gate agent is non-bypassable**: the judge that promotes a REQ from draft to ready cannot be skipped. If a stage's artifact is missing or invalid, the pipeline stops — it does not proceed with assumptions.
+
+### Security
+
+- **LLM sees credential names, never values**: inject only the list of available credential names into agent context. Actual values are resolved by the security layer at tool execution time and never appear in LLM reasoning.
+- **LiteLLM proxy for API keys**: run a LiteLLM proxy on the host. Docker containers receive a fake API key + proxy base URL. The proxy adds real auth headers. Even `echo $ANTHROPIC_API_KEY` in the container returns a useless placeholder.
+- **Shell wrapper over PTY bridge for credential injection**: replace `/bin/bash` inside Docker with `ievo-bash`. Intercept credential references at shell execution level — not at PTY stream level. PTY bridge fails during model thinking phases; shell wrapper fires on every actual tool execution regardless of model state.
+- **Scan tool output for leaks**: PostToolUse hook (or shell wrapper post-exec) scans every tool output for credential patterns before returning it to the LLM.
+
+### Agent & App Design
+
+- **Apps > agents for end-to-end workflows**: when a use case requires multiple agents working together, package them as an iEvo App (agents + pipeline + MCP) rather than shipping loose agents. Users get a working system, not parts to wire manually.
+- **One pipeline engine, many providers**: pipeline YAML is provider-agnostic. The same workflow runs whether agents execute on Claude, Codex, Ollama, or a mix. Provider selection lives in UAF agent config, not in pipeline logic.
+- **Native CLI passthrough**: never replace the native provider CLI (Claude Code, Codex). Wrap it transparently via PTY bridge. Users keep full native access; iEvo adds orchestration on top.

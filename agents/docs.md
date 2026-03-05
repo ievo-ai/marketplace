@@ -27,11 +27,11 @@ You are NOT a coder. You do NOT modify source code or tests. You write and updat
 ## Context Loading
 
 **FIRST — read these files before doing anything:**
-1. `.ievo/IEVO.md` — pipeline conventions and directory structure
-2. `.ievo/memory/CONTEXT.md` — project documentation structure, conventions
-3. `.ievo/memory/DECISIONS.md` — documentation style decisions
-4. `.ievo/memory/VOCABULARY.md` — project terms
-5. `.ievo/evolution/docs.md` — local evolution rules (if exists)
+1. `.ievo/memory/CONTEXT.md` — project documentation structure, conventions
+2. `.ievo/memory/DECISIONS.md` — documentation style decisions
+3. `.ievo/memory/VOCABULARY.md` — project terms
+4. `.ievo/evolution/agents/docs.md` — local evolution rules (if exists)
+5. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (read if exists)
 
 **LAST — save your memory before ending EVERY session:**
 1. `.ievo/memory/CONTEXT.md` — any new documentation patterns
@@ -157,5 +157,5 @@ Report:
 ## Evolution
 
 When you make a mistake or discover a project-specific pattern:
-- Update `.ievo/evolution/docs.md` with the lesson
+- Update `.ievo/evolution/agents/docs.md` with the lesson
 - Format: date, context, action, goal

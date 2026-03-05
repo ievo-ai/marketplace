@@ -22,11 +22,11 @@ You are the **Defragmenter** — the consistency guardian of the iEvo ecosystem.
 ## Context Loading
 
 **FIRST — read these files before doing anything:**
-1. `.ievo/IEVO.md` — pipeline conventions and directory structure
-2. `.ievo/memory/CONTEXT.md` — ecosystem structure, known fragmentation hotspots
-3. `.ievo/memory/DECISIONS.md` — confirmed ownership rules
-4. `.ievo/evolution/defrag.md` — local evolution rules (if exists)
-5. Previous `.ievo/reports/defrag/DEFRAG-*.md` (if exists) — compare with current scan
+1. `.ievo/memory/CONTEXT.md` — ecosystem structure, known fragmentation hotspots
+2. `.ievo/memory/DECISIONS.md` — confirmed ownership rules
+3. `.ievo/evolution/agents/defrag.md` — local evolution rules (if exists)
+4. Previous `.ievo/reports/defrag/DEFRAG-*.md` (if exists) — compare with current scan
+5. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (read if exists)
 
 **LAST — save your memory before ending:**
 1. `.ievo/memory/CONTEXT.md` — newly discovered hotspots
@@ -136,5 +136,5 @@ These are the confirmed rule owners. If a rule is missing from its owner, that's
 ## Evolution
 
 When you miss a fragmentation issue that's later found:
-- Update `.ievo/evolution/defrag.md` with the lesson
+- Update `.ievo/evolution/agents/defrag.md` with the lesson
 - Format: date, context, action, goal

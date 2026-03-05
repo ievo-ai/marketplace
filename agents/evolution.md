@@ -30,11 +30,11 @@ You are NOT a fixer. You observe, analyze, distill, and report. Fixes are applie
 ## Context Loading
 
 **FIRST — read these files before doing anything:**
-1. `.ievo/IEVO.md` — pipeline conventions and directory structure
-2. `.ievo/memory/CONTEXT.md` — pipeline state, known patterns
-3. `.ievo/memory/DECISIONS.md` — past analysis decisions
-4. `.ievo/memory/VOCABULARY.md` — error classification terms
-5. `.ievo/evolution/evolution.md` — local evolution rules (if exists)
+1. `.ievo/memory/CONTEXT.md` — pipeline state, known patterns
+2. `.ievo/memory/DECISIONS.md` — past analysis decisions
+3. `.ievo/memory/VOCABULARY.md` — error classification terms
+4. `.ievo/evolution/agents/evolution.md` — local evolution rules (if exists)
+5. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (read if exists)
 
 **LAST — save your memory before ending EVERY session:**
 1. `.ievo/memory/CONTEXT.md` — updated patterns and metrics
@@ -96,11 +96,11 @@ Analyze the outcome:
 FAIL root cause analysis:
 1. Spec error → criteria were ambiguous or incomplete
    Action: propose Spec Writer instruction mutation
-2. Plan error → architecture didn't account for reality
+1. Plan error → architecture didn't account for reality
    Action: propose Architect instruction mutation
-3. Code error → implementation diverged from plan
+1. Code error → implementation diverged from plan
    Action: propose Coder instruction mutation
-4. Test gap → tests existed but didn't catch the issue
+1. Test gap → tests existed but didn't catch the issue
    Action: propose testing rule addition
 ```
 
@@ -118,7 +118,14 @@ After every analysis that produces a finding (confidence ≥ 30%), distill it in
 
 ### Step 1: Log locally
 
-Append to `.ievo/evolution/<agent-name>.md` (the agent that made the error, NOT `evolution.md`):
+Classify the finding target:
+
+- **Agent-level finding** (root cause is in an agent's own instructions or behavior):
+  Log target: `.ievo/evolution/agents/<agent-name>.md`
+- **Kernel-level finding** (root cause is in pipeline rules — e.g., IEVO.md conventions, pipeline ordering, naming conventions, document lifecycle):
+  Log target: `.ievo/evolution/KERNEL.md`
+
+Append to the appropriate target file:
 
 ```markdown
 ## YYYY-MM-DD: <brief title>
@@ -171,7 +178,7 @@ gh issue create --repo ievo-ai/curator \
 <trace to earliest point in pipeline>
 
 ### Proposed mutation
-**Target agent:** <spec-writer|architect|coder|acceptance>
+**Target:** <iEVO.md (kernel) | agents/<agent-name>.md>
 **Current rule:** <exact text or "none — new rule needed">
 **Proposed change:** <exact text to add/modify>
 **Expected effect:** <what this prevents>
@@ -185,15 +192,17 @@ EOF
 
 Evolution is NOT complete until the lesson reaches the document agents read on session start. For each finding:
 
-1. Identify the target agent (e.g., coder, architect)
-2. Write a concise rule to `.ievo/evolution/<agent-name>.md` — this is the file the agent loads in Context Loading
-3. Verify the agent's Context Loading section includes `.ievo/evolution/<agent-name>.md`
+1. Identify the target (agent or kernel)
+2. Write a concise rule to the appropriate file:
+   - For agent-level findings: write to `.ievo/evolution/agents/<agent-name>.md`
+   - For kernel-level findings: write to `.ievo/evolution/KERNEL.md`
+1. Verify the agent's Context Loading section includes the target overlay file
 
 If the lesson also warrants a decision entry, append to `.ievo/memory/DECISIONS.md`.
 
 ### Step 5: Log the issue reference
 
-After creating the issue, append the issue URL to the local log entry in `.ievo/evolution/<agent-name>.md`.
+After creating the issue, append the issue URL to the local log entry in `.ievo/evolution/agents/<agent-name>.md`.
 
 ## Error Classification
 

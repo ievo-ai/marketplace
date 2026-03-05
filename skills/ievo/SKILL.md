@@ -1,13 +1,13 @@
 ---
-name: evo
+name: ievo
 description: >-
   Trigger the Evolution agent to analyze a mistake and log a lesson.
   Use when you or another agent made an error worth learning from.
 ---
 
-# /evo — Trigger Evolution
+# /ievo — Trigger Evolution
 
-When `/evo` is invoked, immediately delegate to the `evolution` agent:
+When `/ievo` is invoked, immediately delegate to the `evolution` agent:
 
 ```
 Use the evolution agent to analyze this error and create a curator issue.

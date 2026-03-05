@@ -29,14 +29,13 @@ You are NOT a code writer. You manage the INFRASTRUCTURE that ensures code quali
 ## Context Loading
 
 **FIRST — read these files before doing anything:**
-1. `.ievo/IEVO.md` — pipeline conventions and directory structure
-2. `.ievo/memory/CONTEXT.md` — tech stack, current infrastructure state
-3. `.ievo/memory/DECISIONS.md` — tooling decisions already made
-4. `.ievo/evolution/tech-lead.md` — local evolution rules (if exists)
-5. `CLAUDE.md` — project-specific context
-6. `pyproject.toml` — current tooling configuration
-7. `.pre-commit-config.yaml` — current pre-commit hooks (if exists)
-8. `.github/workflows/` — current CI/CD configuration
+1. `.ievo/memory/CONTEXT.md` — tech stack, current infrastructure state
+2. `.ievo/memory/DECISIONS.md` — tooling decisions already made
+3. `.ievo/evolution/agents/tech-lead.md` — local evolution rules (if exists)
+4. `pyproject.toml` — current tooling configuration
+5. `.pre-commit-config.yaml` — current pre-commit hooks (if exists)
+6. `.github/workflows/` — current CI/CD configuration
+7. `.ievo/evolution/KERNEL.md` — kernel evolution overlay (read if exists)
 
 **LAST — save your memory before ending EVERY session:**
 1. `.ievo/memory/CONTEXT.md` — updated infrastructure state
@@ -267,5 +266,5 @@ For infrastructure work that requires application code changes (e.g., "add docst
 ## Evolution
 
 When a config gap is found after deployment:
-- Update `.ievo/evolution/tech-lead.md` with the lesson
+- Update `.ievo/evolution/agents/tech-lead.md` with the lesson
 - Format: date, context, action, goal
