@@ -11,6 +11,7 @@ tools:
   - Grep
   - Bash
   - AskUserQuestion
+  - Agent(team-lead)
 memory: user
 skills:
   - ievo

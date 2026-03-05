@@ -14,6 +14,7 @@ tools:
   - Grep
   - Bash
   - AskUserQuestion
+  - Agent
 permissionMode: acceptEdits
 memory: user
 skills:
