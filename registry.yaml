@@ -124,6 +124,16 @@ agents:
     mandatory: true
     dependencies: []
 
+  # ── Specialists ────────────────────────────────────────────
+  - name: python-pro
+    version: 0.1.0
+    file: agents/python-pro.md
+    description: "Python 3.12+ expert — modern tooling (uv, ruff, mypy), async, FastAPI, performance, production practices"
+    model: opus
+    category: specialist
+    mandatory: false
+    dependencies: []
+
   # ── Team management ────────────────────────────────────────
   - name: hr
     version: 0.2.0
