@@ -79,13 +79,12 @@ For each item in the PLAN (files to create/modify, architectural decisions, patt
 
 **PASS** — implementation matches the plan:
 - Post GitHub comment: "Architect review ✓ — implementation matches plan"
-- Invoke `code-reviewer` immediately (no user question)
+- Return: `PASS`
 
 **FAIL** — structural deviation from plan:
 1. Create `Q-NNN-arch.md` (see iEVO.md for location) documenting each deviation
 2. Post GitHub comment listing deviations with file references
-3. Notify via `AskUserQuestion`: "PR #N failed architect review: <deviations>. Coder to fix or Architect to revise plan."
-4. STOP
+3. Return: `FAIL: <list of deviations>`
 
 ## Rules
 

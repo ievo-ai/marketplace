@@ -10,7 +10,6 @@ tools:
   - Bash
   - Read
   - AskUserQuestion
-  - Agent(code-reviewer, team-lead)
 memory: user
 skills:
   - ievo

@@ -11,7 +11,6 @@ tools:
   - Grep
   - Bash
   - AskUserQuestion
-  - Agent(acceptance, team-lead)
 permissionMode: plan
 memory: user
 skills:
