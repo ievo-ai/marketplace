@@ -136,10 +136,18 @@ GOOD: "`PUT /users/:id` with `{name: "New Name"}` → `200`, name updated"
 
 ### Step 6: IDENTIFY UNKNOWNS
 For anything unclear:
-- Create Q-xxx.md (use `.ievo/templates/QUESTION_TEMPLATE.md`)
+- Add a `## Questions` section to spec.md with each question as a subsection:
+  ```markdown
+  ## Questions
+  ### Q1: <question title>
+  **Asked by:** spec-writer | **Date:** YYYY-MM-DD
+  <question + options with tradeoffs>
+  **Answer:** (pending)
+  ```
 - Set REQ status: draft
 - ALWAYS provide options with tradeoffs
 - NEVER assume the answer
+- When user answers, update the Answer field and mark `**Status:** resolved`
 
 ### Step 7: ASSIGN PRIORITIES
 Priority scoring formula (from iEVO.md): `score = (priority_weight×3) + (blocking_count×2) + (dependency_met×1) - (complexity×0.5) - (open_questions×5)`. Weights: critical=10, high=7, medium=5, low=3.

@@ -114,7 +114,7 @@ When planning implementation:
 
 Before writing commit steps in any plan, check `DECISIONS.md` for a git workflow decision (branch model, branch naming, PR target). If no such entry exists:
 
-1. Create `.ievo/spec/questions/Q-xxx-git-flow.md` asking the user:
+1. Add a question to ## Questions in the task's spec.md asking the user:
    - Branch model (trunk-based, gitflow, etc.)
    - Branch naming convention
    - PR target branch (main, develop, etc.)
@@ -216,7 +216,7 @@ For each excluded item:
 
 **When to push back on a requirement:**
 
-You CAN create question files (`tasks/NNN/questions/NNN-arch.md`) if:
+You CAN add questions to ## Questions in the task's spec.md if:
 - The requirement implies architecture that conflicts with existing decisions
 - The requirement is technically infeasible as written
 - The requirement would create unacceptable tech debt
@@ -243,7 +243,7 @@ You CAN create question files (`tasks/NNN/questions/NNN-arch.md`) if:
 
 ## Coder Escalation
 
-The Coder may create `spec/questions/Q-xxx-arch.md` if your plan doesn't work in practice. When this happens:
+The Coder may add a question to ## Questions in the task's spec.md if your plan doesn't work in practice. When this happens:
 1. Read the question — understand what broke
 2. Re-read the affected code
 3. Revise the plan or create a new sub-task

@@ -97,7 +97,7 @@ For EACH criterion, ask yourself:
   - Does it reference something not defined? → unclear.
 
 IF anything is unclear:
-  1. Create a Q-xxx question file (see iEVO.md for location)
+  1. Add a question to the ## Questions section of spec.md
   2. Set requirement status to: blocked
   3. Update SPEC_INDEX
   4. STOP. Do NOT proceed to implementation.
@@ -111,7 +111,7 @@ CHECK if spec.md contains a ## Plan section (created by Architect agent).
 IF plan exists:
   - Read it carefully
   - Validate: does every micro-step trace back to an acceptance criterion?
-  - If plan is outdated or conflicts with the ACs → create a question file and STOP
+  - If plan is outdated or conflicts with the ACs → add a question to ## Questions in spec.md and STOP
   - If plan is valid → proceed to Step 3b
 
 IF no plan exists:
@@ -250,11 +250,11 @@ NEVER auto-fix cascade breakages. A cascade means your change affected other fea
 3. Commit after every passing micro-step. Always.
 4. Read the requirement file completely before writing any code.
 5. Update SPEC_INDEX.md after every status change.
-6. Create question files for ANY ambiguity, no matter how small.
+6. Add questions to ## Questions in spec.md for ANY ambiguity, no matter how small.
 
 **What you MUST NOT do:**
 1. **NEVER** implement anything not described in a requirement file.
-2. **NEVER** assume or invent missing details. Ask via question file.
+2. **NEVER** assume or invent missing details. Add to ## Questions in spec.md.
 3. **NEVER** write production code before a failing test exists for it.
 4. **NEVER** work on more than ONE requirement at a time.
 5. **NEVER** skip running the full test suite after implementation.
@@ -273,7 +273,7 @@ NEVER auto-fix cascade breakages. A cascade means your change affected other fea
 **Self-check before every commit:**
 - "Is every line of code I wrote covered by a test?" — if no, delete it or add a test.
 - "Is every line of code I wrote required by the spec?" — if no, delete it.
-- "Did I make any assumptions?" — if yes, create a question file and STOP.
+- "Did I make any assumptions?" — if yes, add a question to ## Questions in spec.md and STOP.
 
 ## File Conventions
 
@@ -284,7 +284,7 @@ NEVER auto-fix cascade breakages. A cascade means your change affected other fea
 ## Architect Escalation
 
 If the Architect's plan doesn't work in practice:
-1. Create a Q-xxx-arch question file (see iEVO.md for location) explaining what broke and why
+1. Add a question to ## Questions in the task's spec.md explaining what broke and why
 2. Set the current task status to: `blocked`
 3. Update SPEC_INDEX.md
 4. STOP — do NOT attempt workarounds
@@ -294,7 +294,7 @@ This is normal. Plans are hypotheses — Architect will revise.
 ## Edge Cases
 
 **"The spec says X but the existing code does Y"**
-→ The spec wins. But first create a question file asking if this conflict is intentional.
+→ The spec wins. But first add a question to ## Questions asking if this conflict is intentional.
 
 **"I need a utility function not in the spec"**
 → If it's internal and needed to pass a test, you may create it. But it MUST be tested.
