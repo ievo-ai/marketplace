@@ -46,31 +46,34 @@ Session starts → memory/sessions/NNN/plan.md (intent, goals, scope)
   │
   │  Idea → backlog/IDEA-xxx.md
   │    ↓ (Sprint planning — human selects)
-  │  Spec Writer → spec/requirements/REQ-xxx.md
+  │  [pipeline] Spec Writer → spec/requirements/REQ-xxx.md   (status: draft → ready)
   │    ↓ (ambiguity?)
   │    → spec/questions/Q-xxx.md (blocks REQ until resolved)
   │    ↓
-  │  Architect → plans/PLAN-REQ-xxx.md
+  │  [pipeline] Architect → plans/PLAN-REQ-xxx.md            (status: ready → planned)
+  │    ↓
+  │  [pipeline] Architect Reviewer — plan sound?
+  │    ↓ WRONG → Architect revises plan
+  │    ↓ PASS
+  │  [pipeline] Team Lead → routes to specialist or implements self
   │    ↓ (plan broken?)
-  │  Coder → spec/questions/Q-xxx-arch.md (escalation to Architect)
+  │    → spec/questions/Q-xxx-arch.md (escalation to Architect)
   │    ↓
-  │  Coder → src/ + tests/ → push branch → open PR (/create-pr)
+  │  Team Lead / Specialist → src/ + tests/ → push branch → open PR (/create-pr)
+  │                                                          (status: planned → review)
   │    ↓
-  │  Direction Reviewer — right thing? PR description vs REQ criteria
-  │    ↓ WRONG → Coder fixes → push
+  │  [pipeline] Direction Reviewer — right thing? PR description vs REQ
+  │    ↓ WRONG → Team Lead fixes → push
   │    ↓ PASS
-  │  Architect Reviewer — built as designed? implementation vs PLAN
-  │    ↓ WRONG → Q-xxx-arch.md → Coder fixes → push
+  │  [pipeline] Code Reviewer → reports/review/REVIEW-REQ-xxx.md
+  │    ↓ NEEDS CHANGES → Team Lead fixes → push
   │    ↓ PASS
-  │  Code Reviewer → reports/review/REVIEW-REQ-xxx.md
-  │    ↓ NEEDS CHANGES → Coder fixes → push
+  │  [pipeline] QA → reports/qa/QA-REQ-xxx.md (+ additional tests)
+  │    ↓ BUGS FOUND → Q-xxx-qa.md → Team Lead fixes → push
   │    ↓ PASS
-  │  QA → reports/qa/QA-REQ-xxx.md (+ additional tests)
-  │    ↓ BUGS FOUND → Q-xxx-qa.md → Coder fixes → push
-  │    ↓ PASS
-  │  Acceptance (full) → reports/acceptance/ACC-REQ-xxx.md
-  │    ↓ FAIL → Coder fixes → ACC-REQ-xxx-r2.md (revision)
-  │    ↓ PASS → notify user → merge PR → status = implemented
+  │  [pipeline] Acceptance (full) → reports/acceptance/ACC-REQ-xxx.md
+  │    ↓ FAIL → Team Lead fixes → ACC-REQ-xxx-r2.md (revision)
+  │    ↓ PASS → gh pr ready → notify user → merge PR  (status: → implemented)
   │    ↓
   │  Docs → docs/, README.md, CLAUDE.md
   │
@@ -81,15 +84,15 @@ Session ends → memory/sessions/NNN/log.md (reality, artifacts, commits)
 ## Requirement Statuses
 
 ```
-draft → ready → in-progress → review → implemented | blocked | removed
+draft → ready → planned → review → implemented | blocked | removed
 ```
 
 - `draft` — has ambiguities, not ready for implementation
-- `ready` — fully specified, agent can pick it up
-- `blocked` — agent found ambiguities, questions filed
-- `in-progress` — agent is currently implementing
-- `review` — implementation complete, in code review / QA / acceptance pipeline
-- `implemented` — all acceptance criteria met, all tests passing
+- `ready` — fully specified, no plan yet — Architect picks up
+- `planned` — PLAN-REQ-xxx exists, ready for implementation — Team Lead picks up
+- `blocked` — agent found ambiguities, questions filed (Q-xxx)
+- `review` — PR open, in verification pipeline (direction → code → QA → acceptance)
+- `implemented` — all acceptance criteria met, PR merged
 - `removed` — deleted via Change Request
 
 ## Sessions
@@ -223,8 +226,9 @@ Read `EVOLUTION.md` for full convention — entry formats, routing rules, contex
 - **15-minute rule**: Architect decomposes every task to ≤15 minutes of agent work
 - **Sprint = agreed REQs**: human approves what enters sprint. Scope is frozen once agreed
 - **Backlog = pre-spec**: raw ideas and proposals, not yet refined into requirements
-- **Acceptance loop**: FAIL → Coder fixes → Acceptance re-verifies. No shortcuts
-- **Coder escalation**: plan broken → `Q-xxx-arch.md` → Architect revises plan
+- **Agents are idempotent**: before starting work, check if artifacts already exist. If REQ/PLAN is partially written — continue from where it left off, do not overwrite. Status = stage to complete, not necessarily to restart. Artifact on disk is the checkpoint.
+- **Acceptance loop**: FAIL → Team Lead fixes → Acceptance re-verifies. No shortcuts
+- **Team Lead escalation**: plan broken → `Q-xxx-arch.md` → Architect revises plan
 - **Evolution gates**: Evolution agent observes every pipeline transition (post-spec, post-plan, post-implementation, post-acceptance)
 - **Atomic REQs**: each requirement has 3-7 testable acceptance criteria
 - **Priority scoring**: `score = (priority_weight×3) + (blocking_count×2) + (dependency_met×1) - (complexity×0.5) - (open_questions×5)`. Weights: critical=10, high=7, medium=5, low=3. Rules: CRs before REQs → filter `ready` + deps `implemented` → score → tiebreak by lower REQ number. Agents auto-select highest-value task
