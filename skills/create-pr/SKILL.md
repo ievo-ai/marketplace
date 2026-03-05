@@ -39,9 +39,9 @@ Called by **Coder** after implementation is verified. Pushes the feature branch,
    REQ-xxx: .ievo/spec/requirements/REQ-xxx.md
    ```
 
-4. **Create PR**
+4. **Create PR as draft**
    ```bash
-   gh pr create --title "REQ-xxx: <title>" --body "<description>"
+   gh pr create --draft --title "REQ-xxx: <title>" --body "<description>"
    ```
 
 5. **Check for merge conflicts**
@@ -52,5 +52,5 @@ Called by **Coder** after implementation is verified. Pushes the feature branch,
    - `mergeable: CONFLICTING` → STOP. Resolve conflicts locally, push, then re-check.
    - `mergeable: UNKNOWN` → wait 5s and retry once (GitHub is still computing).
 
-6. **Notify user**
-   Use `AskUserQuestion`: "PR #N created: <url>. No conflicts. Trigger Acceptance direction check?"
+6. **Trigger direction check**
+   Invoke the `direction-reviewer` agent to verify the PR covers all acceptance criteria.

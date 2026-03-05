@@ -29,11 +29,11 @@ Called by **Code-reviewer** after Acceptance direction check passes. Reviews cod
    If `gh pr review --approve` fails with "Can not approve your own pull request" →
    fall back to a comment: `gh pr comment <number> --body "Code review ✓ ..."` — this is expected when reviewer and author share the same GitHub account (dev environment).
 
-   Notify via `AskUserQuestion`: "PR #N approved by code review. Trigger QA?"
+   Invoke the `acceptance` agent.
 
    **FAIL** — blocking issues found:
    ```bash
    gh pr review <number> --request-changes --body "<issues>"
    ```
    Save report to `.ievo/reports/review/REVIEW-REQ-xxx.md`
-   Notify via `AskUserQuestion`: "PR #N needs changes: <summary>. Coder to fix."
+   Use `AskUserQuestion`: "PR #N needs changes: <summary>. Coder to fix."

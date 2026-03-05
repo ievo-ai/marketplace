@@ -21,10 +21,10 @@ This is intentionally **shallow** — reads PR description and REQ, does NOT rea
 
    **PASS** — all criteria addressed:
    - Comment on PR: "Direction check ✓ — proceeding to code review"
-   - Notify via `AskUserQuestion`: "PR #N passed direction check. Trigger Code-reviewer?"
+   - Invoke the `code-reviewer` agent.
 
    **FAIL** — any criterion missing or wrong:
    - Comment on PR listing exactly which criteria are missing/wrong
    - Set REQ status → `in-progress` in SPEC_INDEX.md
-   - Notify via `AskUserQuestion`: "PR #N failed direction check: <summary>. Coder needs to fix."
+   - Use `AskUserQuestion`: "PR #N failed direction check: <summary>. Coder needs to fix."
    - STOP — do not trigger code review
