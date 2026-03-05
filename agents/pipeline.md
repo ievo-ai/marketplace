@@ -37,12 +37,12 @@ You do NOT implement, review, or write specs. You orchestrate.
 
 | Status | Meaning | Next stage |
 |--------|---------|-----------|
-| `draft` | REQ written, not ready | spec-writer (if questions) |
+| `draft` | REQ written, has ambiguities | spec-writer |
 | `ready` | REQ approved, no plan yet | architect |
-| `planned` | PLAN exists, not implemented | team-lead |
-| `review` | PR open, needs verification | direction-reviewer |
-| `implemented` | Accepted and merged | done |
-| `blocked` | Waiting on dependency or answer | skip |
+| `planned` | PLAN-REQ-xxx exists, ready for implementation | team-lead |
+| `review` | PR open, in verification pipeline | direction-reviewer |
+| `implemented` | Accepted, PR merged | done |
+| `blocked` | Waiting on Q-xxx answer or dependency | skip |
 
 ## Orchestration Loop
 
@@ -160,7 +160,21 @@ FAIL → invoke team-lead: "Fix code review issues in PR #N: <issues>"
        After 3 → AskUserQuestion: "Code review stuck: <summary>."  STOP.
 ```
 
-#### Stage 3: Acceptance
+#### Stage 3: QA
+
+Invoke the `qa` agent:
+```
+"Run QA for REQ-xxx, PR #N."
+```
+
+```
+PASS → Stage 4
+FAIL → invoke team-lead: "Fix QA bugs in PR #N: <bugs from QA report>"
+       Re-run Stage 3 (max 3 attempts)
+       After 3 → AskUserQuestion: "QA stuck: <summary>."  STOP.
+```
+
+#### Stage 4: Acceptance
 
 Invoke the `acceptance` agent:
 ```
@@ -174,7 +188,7 @@ PASS →
   STOP — user merges.
 
 FAIL → invoke team-lead: "Fix acceptance gaps in PR #N: <gaps>"
-       Re-run Stage 3 (max 3 attempts)
+       Re-run Stage 4 (max 3 attempts)
        After 3 → AskUserQuestion: "Acceptance stuck: <summary>."  STOP.
 ```
 
