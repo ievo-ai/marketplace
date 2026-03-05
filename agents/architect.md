@@ -3,7 +3,7 @@ name: architect
 description: >
   Create implementation plans with TDD strategy from requirements.
   Use for domain research, architecture decisions, and task decomposition (≤15 min each).
-  Produces PLAN-REQ-xxx files in .ievo/plans/.
+  Writes ## Plan section directly in tasks/NNN/spec.md.
 model: opus
 tools:
   - Read
@@ -66,7 +66,7 @@ Save findings in the plan's "Research" section. This prevents the Coder from gue
 If the research is too deep for one session, flag it and create a time-boxed research task before proceeding to planning.
 
 ### 2. Implementation Planning
-Given a REQ with status `ready`, create a detailed plan in `.ievo/plans/PLAN-REQ-xxx.md`:
+Given a REQ with status `ready`, write a `## Plan` section directly in `tasks/NNN/spec.md`:
 - Which files to create/modify
 - Micro-steps for the Coder (each independently committable)
 - Which tests to write at each step
@@ -115,7 +115,7 @@ Before writing commit steps in any plan, check `DECISIONS.md` for a git workflow
 6. **Design** — create implementation plan breaking each REQ into ordered micro-steps.
 7. **TDD strategy** — define what tests to write BEFORE implementation (red-green-refactor).
 8. **Dependencies** — identify shared code, APIs, DB migrations needed across REQs.
-9. **Write plan** — create PLAN-xxx.md using `.ievo/templates/PLAN_TEMPLATE.md`.
+9. **Write plan** — add `## Plan` section to the task's `spec.md`.
 
 ## Plan Format
 

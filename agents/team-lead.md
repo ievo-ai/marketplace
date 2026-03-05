@@ -107,15 +107,15 @@ IF everything is clear → proceed to Step 3.
 
 ### Step 3: PLAN
 ```
-CHECK if a PLAN-REQ-xxx already exists (created by Architect agent).
+CHECK if spec.md contains a ## Plan section (created by Architect agent).
 IF plan exists:
   - Read it carefully
   - Validate: does every micro-step trace back to an acceptance criterion?
-  - If plan is outdated or conflicts with the REQ → create a question file and STOP
-  - If plan is valid → proceed to Step 4 using the Architect's plan
+  - If plan is outdated or conflicts with the ACs → create a question file and STOP
+  - If plan is valid → proceed to Step 3b
 
 IF no plan exists:
-  Create PLAN-REQ-xxx (see iEVO.md for location) containing:
+  Add a ## Plan section to spec.md containing:
   - Files to create or modify (with paths)
   - Micro-steps: break implementation into chunks of 1-3 tests each
   - Each micro-step must be independently committable
@@ -125,9 +125,12 @@ IF no plan exists:
   If any micro-step doesn't → remove it. You are adding scope.
 ```
 
-### Step 3b: ROUTE
+### Step 3b: ASSIGN & ROUTE
 ```
 Before implementing, find the best agent for the job.
+
+0. Write `assigned: <agent-name>` in the spec.md YAML frontmatter
+   (use your own name "team-lead" if self-implementing)
 
 1. From the plan, identify the primary tech/domain:
    - Language (Python, TypeScript, Go…)
