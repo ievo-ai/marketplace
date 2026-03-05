@@ -77,8 +77,9 @@ For each item in the PLAN (files to create/modify, architectural decisions, patt
 
 ### Step 4: Verdict
 
-**PASS** — implementation matches the plan:
-- Post GitHub comment: "Architect review ✓ — implementation matches plan"
+**PASS** — plan is sound:
+- Set REQ status → `plan-approved` in SPEC_INDEX.md
+- Post comment on plan file: "Architect review ✓ — plan approved"
 - Return: `PASS`
 
 **FAIL** — structural deviation from plan:

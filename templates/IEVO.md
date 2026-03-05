@@ -50,7 +50,7 @@ Session starts → memory/sessions/NNN/plan.md (intent, goals, scope)
   │    ↓ (ambiguity?)
   │    → spec/questions/Q-xxx.md (blocks REQ until resolved)
   │    ↓
-  │  [pipeline] Architect → plans/PLAN-REQ-xxx.md            (status: ready → planned)
+  │  [pipeline] Architect → plans/PLAN-REQ-xxx.md            (status: ready → planned (plan exists, not reviewed))
   │    ↓
   │  [pipeline] Architect Reviewer — plan sound?
   │    ↓ WRONG → Architect revises plan
@@ -60,7 +60,7 @@ Session starts → memory/sessions/NNN/plan.md (intent, goals, scope)
   │    → spec/questions/Q-xxx-arch.md (escalation to Architect)
   │    ↓
   │  Team Lead / Specialist → src/ + tests/ → push branch → open PR (/create-pr)
-  │                                                          (status: planned → review)
+  │                                                          (status: plan-approved → review)
   │    ↓
   │  [pipeline] Direction Reviewer — right thing? PR description vs REQ
   │    ↓ WRONG → Team Lead fixes → push
@@ -84,12 +84,13 @@ Session ends → memory/sessions/NNN/log.md (reality, artifacts, commits)
 ## Requirement Statuses
 
 ```
-draft → ready → planned → review → implemented | blocked | removed
+draft → ready → planned → plan-approved → review → implemented | blocked | removed
 ```
 
 - `draft` — has ambiguities, not ready for implementation
 - `ready` — fully specified, no plan yet — Architect picks up
-- `planned` — PLAN-REQ-xxx exists, ready for implementation — Team Lead picks up
+- `planned` — PLAN-REQ-xxx exists, not yet reviewed by Architect Reviewer
+- `plan-approved` — plan reviewed and approved — Team Lead picks up
 - `blocked` — agent found ambiguities, questions filed (Q-xxx)
 - `review` — PR open, in verification pipeline (direction → code → QA → acceptance)
 - `implemented` — all acceptance criteria met, PR merged

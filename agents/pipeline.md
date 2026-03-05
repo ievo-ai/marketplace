@@ -62,7 +62,8 @@ updated: 2026-03-05T14:00:00Z
 |--------|---------|-----------|
 | `draft` | REQ written, has ambiguities | spec-writer |
 | `ready` | REQ approved, no plan yet | architect |
-| `planned` | PLAN-REQ-xxx exists, ready for implementation | team-lead |
+| `planned` | PLAN exists, not yet reviewed | architect-reviewer |
+| `plan-approved` | Plan reviewed and approved | team-lead |
 | `review` | PR open, in verification pipeline | direction-reviewer |
 | `implemented` | Accepted, PR merged | done |
 | `blocked` | Waiting on Q-xxx answer or dependency | skip |
@@ -76,11 +77,11 @@ Read SPEC_INDEX.md.
 
 Priority order (process highest first):
   1. status: review   — PR open, finish what's started
-  2. status: planned  — plan ready, implement it
+  2. status: plan-approved — plan approved, implement it
   3. status: ready    — REQ ready, needs planning
   4. status: draft    — REQ needs spec-writer review
 
-Filter ready/planned: dependencies must all be status: implemented.
+Filter ready/plan-approved: dependencies must all be status: implemented.
 Sort within status: priority ASC, then fewest acceptance criteria.
 Select TOP ONE.
 
@@ -93,7 +94,7 @@ If nothing actionable → AskUserQuestion: "No actionable requirements in pipeli
 
 ```
 review   → VERIFICATION PIPELINE (Step 5)
-planned  → IMPLEMENTATION (Step 4)
+plan-approved → IMPLEMENTATION (Step 4)
 ready    → ARCHITECTURE (Step 3)
 draft    → SPEC REVIEW (Step 2b)
 ```
@@ -118,7 +119,7 @@ FAIL (questions created) → AskUserQuestion: "REQ-xxx has open questions: <list
 Invoke the `architect` agent:
 ```
 "Create PLAN-REQ-xxx for REQ-xxx in .ievo/spec/requirements/REQ-xxx.md.
-Decompose into ≤15-min micro-steps. Set REQ status to planned when done."
+Decompose into ≤15-min micro-steps. Set REQ status to planned when done (architect-reviewer sets plan-approved on PASS)."
 ```
 
 ```
@@ -132,13 +133,13 @@ Then invoke the `architect-reviewer` agent:
 ```
 
 ```
-PASS → loop back to Step 1 (picks up status: planned)
+PASS → set status: plan-approved → loop back to Step 1
 FAIL → invoke architect: "Revise PLAN-REQ-xxx: <issues from architect-reviewer>"
        Re-run architect-reviewer (max 2 attempts)
        After 2 attempts → AskUserQuestion: "Architecture review stuck: <summary>."  STOP.
 ```
 
-### Step 4: IMPLEMENTATION (status: planned)
+### Step 4: IMPLEMENTATION (status: plan-approved)
 
 Invoke the `team-lead` agent:
 ```
@@ -217,7 +218,7 @@ FAIL → invoke team-lead: "Fix acceptance gaps in PR #N: <gaps>"
 
 ## Rules
 
-- **Priority order is strict.** review > planned > ready > draft. Always finish what's closer to done.
+- **Priority order is strict.** review > plan-approved > planned > ready > draft. Always finish what's closer to done.
 - **Never skip stages.** Full verification sequence every time.
 - **Max retries.** 3 per verification stage, 2 for architect-reviewer. Escalate after.
 - **One REQ at a time.** Finish before starting next.
