@@ -54,20 +54,23 @@ Session starts → memory/sessions/NNN/plan.md (intent, goals, scope)
   │    ↓ (plan broken?)
   │  Coder → spec/questions/Q-xxx-arch.md (escalation to Architect)
   │    ↓
-  │  Coder → src/ + tests/ → push branch → open PR
+  │  Coder → src/ + tests/ → push branch → open PR (/create-pr)
   │    ↓
-  │  Acceptance (PR check) — right direction? PR description vs REQ criteria
-  │    ↓ WRONG DIRECTION → Coder fixes → new push
-  │    ↓ RIGHT DIRECTION
+  │  Direction Reviewer — right thing? PR description vs REQ criteria
+  │    ↓ WRONG → Coder fixes → push
+  │    ↓ PASS
+  │  Architect Reviewer — built as designed? implementation vs PLAN
+  │    ↓ WRONG → Q-xxx-arch.md → Coder fixes → push
+  │    ↓ PASS
   │  Code Reviewer → reports/review/REVIEW-REQ-xxx.md
-  │    ↓ NEEDS CHANGES → Coder fixes → re-review
+  │    ↓ NEEDS CHANGES → Coder fixes → push
   │    ↓ PASS
   │  QA → reports/qa/QA-REQ-xxx.md (+ additional tests)
-  │    ↓ BUGS FOUND → Coder fixes → re-QA
+  │    ↓ BUGS FOUND → Q-xxx-qa.md → Coder fixes → push
   │    ↓ PASS
   │  Acceptance (full) → reports/acceptance/ACC-REQ-xxx.md
   │    ↓ FAIL → Coder fixes → ACC-REQ-xxx-r2.md (revision)
-  │    ↓ PASS → merge PR → status = implemented
+  │    ↓ PASS → notify user → merge PR → status = implemented
   │    ↓
   │  Docs → docs/, README.md, CLAUDE.md
   │

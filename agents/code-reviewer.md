@@ -10,8 +10,8 @@ tools:
   - Glob
   - Grep
   - Bash
-permissionMode: plan
   - AskUserQuestion
+permissionMode: plan
 memory: user
 skills:
   - ievo

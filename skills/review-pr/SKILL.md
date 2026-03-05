@@ -26,6 +26,9 @@ Called by **Code-reviewer** after Acceptance direction check passes. Reviews cod
    ```bash
    gh pr review <number> --approve --body "Code review ✓"
    ```
+   If `gh pr review --approve` fails with "Can not approve your own pull request" →
+   fall back to a comment: `gh pr comment <number> --body "Code review ✓ ..."` — this is expected when reviewer and author share the same GitHub account (dev environment).
+
    Notify via `AskUserQuestion`: "PR #N approved by code review. Trigger QA?"
 
    **FAIL** — blocking issues found:

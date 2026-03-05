@@ -9,8 +9,8 @@ tools:
   - Read
   - Glob
   - Grep
-permissionMode: plan
   - AskUserQuestion
+permissionMode: plan
 memory: user
 ---
 

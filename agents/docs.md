@@ -10,8 +10,8 @@ tools:
   - Edit
   - Glob
   - Grep
-permissionMode: acceptEdits
   - AskUserQuestion
+permissionMode: acceptEdits
 memory: user
 skills:
   - ievo
