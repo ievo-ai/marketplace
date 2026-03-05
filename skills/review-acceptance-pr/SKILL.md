@@ -21,9 +21,9 @@ This is intentionally **shallow** — reads PR description and REQ, does NOT rea
 
    **PASS** — all criteria addressed:
    - Comment on PR: "Direction check ✓ — proceeding to code review"
-   - Invoke the `code-reviewer` agent.
+   - Return: `PASS`
 
    **FAIL** — any criterion missing or wrong:
    - Comment on PR listing exactly which criteria are missing/wrong
    - Set REQ status → `in-progress` in SPEC_INDEX.md
-   - Invoke the `team-lead` agent to fix the issues.
+   - Return: `FAIL: <list of missing criteria>`

@@ -9,6 +9,15 @@
 
 agents:
   # ── Core SDD pipeline ──────────────────────────────────────
+  - name: pipeline
+    version: 0.1.0
+    file: agents/pipeline.md
+    description: "SDD pipeline orchestrator — drives REQs from ready to merged PR"
+    model: sonnet
+    category: core
+    mandatory: true
+    dependencies: []
+
   - name: spec-writer
     version: 0.2.0
     file: agents/spec-writer.md

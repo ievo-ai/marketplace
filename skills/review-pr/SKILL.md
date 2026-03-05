@@ -29,7 +29,7 @@ Called by **Code-reviewer** after Acceptance direction check passes. Reviews cod
    If `gh pr review --approve` fails with "Can not approve your own pull request" →
    fall back to a comment: `gh pr comment <number> --body "Code review ✓ ..."` — this is expected when reviewer and author share the same GitHub account (dev environment).
 
-   Invoke the `acceptance` agent.
+   Return: `PASS`
 
    **FAIL** — blocking issues found:
    ```bash
@@ -37,4 +37,4 @@ Called by **Code-reviewer** after Acceptance direction check passes. Reviews cod
    ```
    Save report to `.ievo/reports/review/REVIEW-REQ-xxx.md`
    Set requirement status → `in-progress` in SPEC_INDEX.md.
-   Invoke the `team-lead` agent to fix the issues.
+   Return: `FAIL: <list of blocking issues>`

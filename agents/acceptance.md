@@ -165,12 +165,7 @@ If PASS:
   - Set requirement status to: implemented
   - Update SPEC_INDEX.md
   - Log: "REQ-xxx verified and accepted"
-  - Promote PR from draft to ready for review:
-    ```bash
-    gh pr ready <PR_NUMBER>
-    ```
-  - Notify user via `AskUserQuestion`:
-    "REQ-xxx accepted. PR #N is ready to merge: <url>"
+  - Return: `PASS`
 
 If FAIL:
   - Set requirement status to: ready (back to team-lead)
@@ -178,7 +173,7 @@ If FAIL:
   - Add gaps as comments in REQ-xxx.md under "## Acceptance Gaps"
   - Update SPEC_INDEX.md
   - Log: "REQ-xxx failed acceptance: [summary of gaps]"
-  - Invoke the `team-lead` agent to fix the gaps.
+  - Return: `FAIL: <list of gaps from ACC report>`
 
 Team Lead MUST read the acceptance report before re-working.
 Team Lead re-submits by setting status back to: review.
