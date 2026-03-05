@@ -244,7 +244,26 @@ Update project memory to reflect the completed feature:
 4. If REQ affects a public-facing interface (API, CLI commands, config) → update `README.md`
 
 ```
-Done →
+Done → check logs for failures → Stage 6 (conditional) or finish.
+```
+
+#### Stage 6: Evolution (conditional)
+
+**Trigger:** any FAIL, RETRY, or BLOCKED entry in the run `logs`.
+**Skip:** if all stages passed on first attempt (clean run = nothing to learn).
+
+Invoke the `evolution` agent:
+```
+"Analyze pipeline run for REQ-xxx. Logs:
+<paste logs section from run file>
+
+Find failure patterns. Log lessons to .ievo/evolution/LOG.md.
+If the failure was caused by an agent's instructions being unclear or incomplete,
+update the relevant agent overlay in .ievo/evolution/agents/<agent>.md."
+```
+
+```
+Done (after Stage 6 or skip) →
   1. Delete run file
   2. AskUserQuestion: "REQ-xxx done. PR #N is draft — review and merge when ready: <url>"
   STOP — user reviews and merges.
@@ -260,6 +279,5 @@ Done →
 
 ## Evolution
 
-When a stage loops or escalates:
-- Log to `.ievo/evolution/LOG.md`: date, REQ, stage, failure pattern
-- This feeds Eva's pattern detection
+Stage 6 handles evolution automatically when failures occur. Manual `/ievo` is still
+available for lessons discovered outside the pipeline run.
