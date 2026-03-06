@@ -43,23 +43,12 @@ Pipeline state lives in `tasks/<id>/spec.md` frontmatter (`stage`, `status`, `at
 ## Context Loading
 
 **FIRST — read before doing anything:**
-1. `.ievo/iEVO.md` — pipeline conventions, status definitions
-2. `.ievo/tasks/_index.csv` — current state of all tasks
-3. Active task's `spec.md` frontmatter — resume stage after compaction
-4. `.ievo/evolution/KERNEL.md` — pipeline-level rules
+1. `.ievo/tasks/_index.csv` — current state of all tasks
+2. Active task's `spec.md` frontmatter — resume stage after compaction
+3. `.ievo/evolution/KERNEL.md` — pipeline-level rules
 
-## Status Map
-
-| Status | Meaning | Next stage |
-|--------|---------|-----------|
-| `idea` | Raw thought, no AC yet | spec-writer (when promoted) |
-| `ready` | Spec approved by user, no plan yet | architect |
-| `planned` | ## Plan written, not yet reviewed | architect-reviewer |
-| `plan-approved` | Plan reviewed and approved | team-lead |
-| `in_progress` | Draft PR open, internal pipeline running | direction-reviewer → ... → acceptance |
-| `review` | Acceptance PASS, PR ready for user review | user reviews |
-| `done` | User approved and merged | done |
-| `blocked` | Waiting on question answer or dependency | skip |
+> iEVO.md (statuses, structure, conventions) is auto-injected — do not read it explicitly.
+> Status definitions and transitions are defined there. Refer to them by name.
 
 ## Orchestration Loop
 
