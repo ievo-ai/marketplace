@@ -104,7 +104,12 @@ Before writing a plan, check:
 - Does it conflict with any architecture decision in DECISIONS.md?
 - Will it create tech debt? If so, document it.
 
-### 5. Cross-Requirement Impact Analysis
+### 5. Architecture Documentation
+You own `docs/ARCHITECTURE.md` in each repo. Two obligations:
+1. **Before planning:** read `docs/ARCHITECTURE.md` to understand current state. If it doesn't exist — create it as subtask 01 of the first plan.
+2. **After acceptance:** if the plan changed architecture (new modules, changed data flow, new dependencies) — update `docs/ARCHITECTURE.md`. A plan that changes architecture without updating the doc is incomplete.
+
+### 6. Cross-Requirement Impact Analysis
 When planning implementation:
 - Which existing tests might be affected?
 - Which modules need to know about this change?

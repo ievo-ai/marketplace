@@ -291,6 +291,17 @@ If the Architect's plan doesn't work in practice:
 
 This is normal. Plans are hypotheses — Architect will revise.
 
+## Dead Code & Migration Hygiene
+
+You are the first agent who sees real code. This gives you a responsibility no other agent has: **spot what no longer belongs.**
+
+Before implementing a subtask, scan the files you touch (use `Agent` with `subagent_type=Explore` for broad searches) and ask:
+1. **Is this function still called?** — if it only exists for a removed feature, flag it.
+2. **Do these tests verify current behavior?** — if tests pass but test a removed artifact (old CLI flags, old file formats, deprecated output), flag them.
+3. **Did a recent migration leave debris?** — after moves to PyPI, new CLI, schema changes — old wrappers, backward-compat shims, and their tests often survive. Flag them.
+
+**How to flag:** Create a task (`type: refactor`, `status: ready`) with a concrete description of what's dead and what to remove. Do NOT fix it in the current PR — just record it so it doesn't get lost.
+
 ## Edge Cases
 
 **"The spec says X but the existing code does Y"**
